@@ -79,11 +79,28 @@
 | `date` | `date` | Show current date and time |
 | `clear` | `clear` | Clear terminal screen |
 | `history` | `history` | Show previously run commands |
-| `man` | `man ls` | Show manual/help for command |
-| `grep` | `grep "pattern" file.txt` | Search for pattern in file |
-| `find` | `find . -name "*.txt"` | Search for files matching pattern |
-| `ps` | `ps aux` | List running processes |
-| `kill` | `kill PID` | Terminate process by PID |
+| `man` | `man` | Shows this command guide but on terminal |
+| `grep` | `grep [options] [word] [file]` | Search for pattern in file |
+| `find` | `find [path] [options] [expression]` | Search for files matching pattern |
+
+**Note:**
+### **Common `grep` Options**
+  - `-i` → Case-insensitive search
+  - `-n` → Show line numbers of hits, followed by line itself
+  - `-w` → Match the whole word only
+  - `-c` → Count the number of matching words
+  - `-l` → Count the number of matching lines
+  - `-o` → Show only the matching part of the line
+
+### **Common `find` Options**
+  - `-name <filename>` → Match files with name (case-sensitive)
+  - `-iname <filename>` → Match files with name (case-insensitive)
+  - `-type f` → Find all files in `[path]`
+  - `-type d` → Find all directories in `[path]`
+  - `-size <number>[C|K|M]` → Find files by size:
+      - `C` → bytes
+      - `K` → kilobytes
+      - `M` → megabytes
 
 ---
 
