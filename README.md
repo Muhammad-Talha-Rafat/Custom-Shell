@@ -31,15 +31,24 @@ The main goal is to understand **process creation**, **I/O redirection**, **pipi
 ## 💡 Built-in Commands
 | Command | Description | Example |
 |----------|--------------|----------|
-| `cd` | Change directory | `cd Documents` |
-| `pwd` | Print current working directory | `pwd` |
-| `mkdir` | Create a new directory | `mkdir test` |
-| `rmdir` | Remove an empty directory | `rmdir test` |
-| `ls` | List files in current directory | `ls -l` |
-| `touch` | Create a new file | `touch notes.txt` |
-| `clear` | Clear the screen | `clear` |
-| `echo` | Display a line of text | `echo Hello World` |
-| `exit` | Close the shell | `exit` |
+| `cd` | Changes directory | `cd E:/Repositories` |
+| `pwd` | Prints current working directory | `pwd` |
+| `mkdir` | Creates a new directory | `mkdir Files` |
+| `rmdir` | Removes an empty directory | `rmdir Files` |
+| `rmdir -r` | Deletes a directory recursively | `rmdir -r Files` |
+| `rm` | Deletes a file | `rm notes.txt` |
+| `ls` | Lists file names in current directory | `ls` |
+| `ls -l` | Lists files with name and size in current directory | `ls -l` |
+| `touch` | Creates a new file / updates its timestamp | `touch notes.txt` |
+| `clear` | Clears the screen | `clear` |
+| `echo` | Displays a line of text | `echo Hello World` |
+| `exit` | Closes the shell | `exit` |
+
+
+
+| `cp` | Copies files/directories | `cp Files/notes.txt Important` |
+| `mv` | Moves or renames files/directories | `mv Files/notes.txt Important` |
+
 
 ---
 
