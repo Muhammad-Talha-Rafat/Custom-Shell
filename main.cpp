@@ -12,7 +12,5 @@ set<string> CommandList = {
 };
 
 int main() {
-    for (const auto& command : CommandList) {
-        cout << command << endl;
-    }
+    return 0;
 }
