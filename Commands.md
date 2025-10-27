@@ -108,9 +108,9 @@
 
 | Operator | Description |
 |----------|-------------|
-| `&&` | AND: run second command only if first succeeds |
-| `\|\|` | OR: run second command only if first fails |
-| `!` | NOT: invert the exit status of a command (output remains the same) |
+| `&&` | Run command only if the first one succeeds |
+| `\|\|` | Run command only if the first one fails |
+| `!` | Invert the exit status of a command (output remains the same) |
 
 **Example:**
 ```bash
