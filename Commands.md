@@ -109,7 +109,7 @@
 | Operator | Description |
 |----------|-------------|
 | `&&` | AND: run second command only if first succeeds |
-| `||` | OR: run second command only if first fails |
+| `\|\|` | OR: run second command only if first fails |
 | `!` | NOT: invert the exit status of a command (output remains the same) |
 
 **Example:**
