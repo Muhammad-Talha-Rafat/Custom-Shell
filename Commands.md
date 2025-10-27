@@ -109,7 +109,7 @@
 
 ## **6️⃣ Redirect Operators**
 
-| Operation                    | Description                                    |
+| Operation Example            | Description                                    |
 | ---------------------------- | ---------------------------------------------- |
 | `echo "Hello" > file.txt`    | Overwrite content of file                      |
 | `echo "World" >> file.txt`   | Append text to file                            |
