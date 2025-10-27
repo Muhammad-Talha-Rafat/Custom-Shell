@@ -80,7 +80,7 @@
 | `date`    | `date`                               | Show current date and time          |
 | `clear`   | `clear`                              | Clear terminal screen               |
 | `history` | `history`                            | Show previously run commands        |
-| `man`     | `man [command]`                      | Show manual/help for a command      |
+| `man`     | `man`                                | Show this manual but on terminal  |
 | `grep`    | `grep [options] [pattern] [file]`    | Search for pattern in file          |
 | `find`    | `find [path] [options] [expression]` | Search for files matching a pattern |
 
