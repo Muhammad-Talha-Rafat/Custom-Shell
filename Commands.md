@@ -77,11 +77,12 @@
 
 | Command   | Example                              | Description                                 |
 | --------- | ------------------------------------ | ------------------------------------------- |
-| `date`    | `date`                               | Show current date and time                  |
+| `date`    | `date`                               | Show current date                           |
+| `time`    | `time`                               | Show current time                           |
 | `clear`   | `clear`                              | Clear terminal screen                       |
 | `history` | `history`                            | Show previously run commands                |
-| `exit`    | `exit`                               | Terminate the session and end the program   |
-| `man`     | `man`                                | Show this manual but on terminal            |
+| `exit`    | `exit`                               | Terminates the session and ends the program |
+| `help`    | `help`                               | Show this manual but on terminal            |
 | `grep`    | `grep [options] [pattern] [file]`    | Search for pattern in file                  |
 | `find`    | `find [path] [options] [expression]` | Search for files matching a pattern         |
 
