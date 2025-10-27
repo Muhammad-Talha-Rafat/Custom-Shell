@@ -1,0 +1,9 @@
+Learning C++ is fun and rewarding.
+You can build small tools like a custom shell.
+File operations are essential for many programs.
+Redirection allows saving output to files.
+Logical operators control program flow.
+Practice makes perfect in programming.
+VS Code is a versatile editor for C++.
+Keep experimenting with new commands.
+Enjoy building projects step by step.

@@ -1,0 +1,12 @@
+Project management requires planning and coordination.
+Time management is key for meeting deadlines.
+Version control helps track changes in code.
+Collaborating in teams improves learning.
+Good documentation ensures maintainability.
+Testing verifies that the software works correctly.
+Design patterns solve common programming problems.
+Debugging tools help identify issues quickly.
+Continuous learning keeps skills up to date.
+Automation increases productivity in repetitive tasks.
+Clear communication prevents misunderstandings.
+Reflecting on mistakes promotes growth.

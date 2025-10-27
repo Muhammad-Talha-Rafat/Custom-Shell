@@ -1,0 +1,8 @@
+Bash scripting simplifies repetitive tasks.
+Input parsing is important for custom shells.
+Errors should be handled gracefully in programs.
+A sandbox prevents accidental file deletion.
+Files can contain logs, notes, or configuration.
+Simple tools often teach important concepts.
+Explore different Linux commands safely.
+Automation saves time and reduces mistakes.
