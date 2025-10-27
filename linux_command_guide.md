@@ -6,8 +6,8 @@
 
 | Command | Example | Description |
 |---------|---------|-------------|
-| `ls` | `ls` | List files in current directory (names only) |
-| `ls -l` | `ls -l` | List files with details (permissions, owner, size, date) |
+| `ls` | `ls` | List files in current directory with name only |
+| `ls -l` | `ls -l` | List files with name, size, and date) |
 | `pwd` | `pwd` | Show current working directory |
 | `cd` | `cd /path/to/directory` | Change directory (absolute or relative) |
 | `cd ~` | `cd` | Return to home directory |
@@ -15,10 +15,11 @@
 | `rmdir` | `rmdir folder` | Delete an empty directory |
 | `rm` | `rm file.txt` | Delete a file |
 | `rm -r` | `rm -r folder` | Delete folder recursively |
+| `rm *.txt` | `rm *.txt` | Delete all `.txt` files in the current directory |
 
 **Notes:**
 - `cd` will fail if the path doesn’t exist or is a file.
-- `mkdir` will fail if directory already exists (unless using `mkdir -p`).
+- `mkdir` will fail if directory already exists.
 - `rm folder` without `-r` will fail if folder is not empty.
 
 ---
@@ -31,11 +32,14 @@
 | `cp` | `cp file.txt newfile.txt` | Copy and rename file |
 | `cp -r` | `cp -r folder Backup` | Copy folder recursively |
 | `mv` | `mv file.txt /path/to/dest/` | Move file or directory |
-| `mv` | `mv file.txt newname.txt` | Rename file or directory |
+| `mv` | `mv file.txt newname.txt` | Rename file |
+| `mv` | `mv files Backup` | Move directory  |
 
 **Notes:**
-- `mv` **removes the source** after moving.
-- Copying/moving directories without `-r` will fail.
+- `mv` **removes the source** after moving.  
+- Copying directories with `cp` requires `-r`; moving with `mv` does **not** require `-r`.  
+- If the target path/name does **not exist**, `mv` will **rename** the source to the target name.  
+- If the target exists and is a directory, `mv` will **move the source inside** the target directory.
 
 ---
 
@@ -52,8 +56,8 @@
 | `tail -c 10 file.txt` | `tail -c 10 file.txt` | Print last 10 bytes |
 
 **Notes:**
-- `head` or `tail` on directories will give an error.
-- Binary files (`.exe`) will print gibberish when using `head`/`tail`.
+- `head`, `tail` or `cat` on directories will give an error.
+- Binary files (`.exe`) will print gibberish when using `head`/`tail`/`cat`.
 
 ---
 
@@ -62,6 +66,7 @@
 | Command | Example | Description |
 |---------|---------|-------------|
 | `touch` | `touch file.txt` | Create empty file or update timestamp |
+| `echo` | `echo "Hello"` | Prints text on terminal |
 | `echo` | `echo "Hello" > file.txt` | Write text to file (overwrites) |
 | `echo` | `echo "Hello" >> file.txt` | Append text to file |
 
@@ -77,15 +82,8 @@
 | `man` | `man ls` | Show manual/help for command |
 | `grep` | `grep "pattern" file.txt` | Search for pattern in file |
 | `find` | `find . -name "*.txt"` | Search for files matching pattern |
-| `chmod` | `chmod 755 file.sh` | Change file permissions |
-| `chown` | `chown user:group file.txt` | Change file owner and group |
-| `df` | `df -h` | Show disk usage of filesystems |
-| `du` | `du -sh folder` | Show size of folder/files |
 | `ps` | `ps aux` | List running processes |
-| `top` | `top` | Monitor processes in real time |
 | `kill` | `kill PID` | Terminate process by PID |
-| `ssh` | `ssh user@host` | Connect to remote host via SSH |
-| `scp` | `scp file.txt user@host:/path/` | Copy file to remote host |
 
 ---
 
@@ -106,11 +104,4 @@ mkdir test && cd test || echo "Failed to create or enter folder"
 - `&&` has **higher precedence** than `||`.
 - Bash evaluates `A && B || C && D || E` as `((A && B) || (C && D)) || E`.
 
----
-
-✅ **This guide covers:**
-- File and directory management
-- Viewing and editing files
-- Common utilities and processes
-- Logical operators for command chaining
 
