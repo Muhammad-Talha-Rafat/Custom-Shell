@@ -31,7 +31,7 @@ The main goal is to understand **process creation**, **I/O redirection**, **pipi
 ## 💡 Built-in Commands
 | Command | Description | Example |
 |----------|--------------|----------|
-| `cd` | Change directory | `cd Documents` |
+| `cd` | Change directory | `cd E:/Repositories` |
 | `pwd` | Print current working directory | `pwd` |
 | `mkdir` | Create a new directory | `mkdir test` |
 | `rmdir` | Remove an empty directory | `rmdir test` |
