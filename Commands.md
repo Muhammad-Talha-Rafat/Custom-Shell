@@ -100,6 +100,7 @@
 * `-type f` → Find all files in `[path]`
 * `-type d` → Find all directories in `[path]`
 * `-size <number>[C|K|M]` → Find files by size:
+
   * `C` → bytes
   * `K` → kilobytes
   * `M` → megabytes
