@@ -75,14 +75,15 @@
 
 ## **5️⃣ Miscellaneous Commands**
 
-| Command   | Example                              | Description                         |
-| --------- | ------------------------------------ | ----------------------------------- |
-| `date`    | `date`                               | Show current date and time          |
-| `clear`   | `clear`                              | Clear terminal screen               |
-| `history` | `history`                            | Show previously run commands        |
-| `man`     | `man`                                | Show this manual but on terminal  |
-| `grep`    | `grep [options] [pattern] [file]`    | Search for pattern in file          |
-| `find`    | `find [path] [options] [expression]` | Search for files matching a pattern |
+| Command   | Example                              | Description                                 |
+| --------- | ------------------------------------ | ------------------------------------------- |
+| `date`    | `date`                               | Show current date and time                  |
+| `clear`   | `clear`                              | Clear terminal screen                       |
+| `history` | `history`                            | Show previously run commands                |
+| `exit`    | `exit`                               | Terminates the session and ends the program |
+| `man`     | `man`                                | Show this manual but on terminal            |
+| `grep`    | `grep [options] [pattern] [file]`    | Search for pattern in file                  |
+| `find`    | `find [path] [options] [expression]` | Search for files matching a pattern         |
 
 ### **Common `grep` Options**
 
