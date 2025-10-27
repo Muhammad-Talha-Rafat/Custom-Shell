@@ -113,7 +113,7 @@
 | ---------------------------- | ---------------------------------------------- |
 | `echo "Hello" > file.txt`    | Overwrite content of file                      |
 | `echo "World" >> file.txt`   | Append text to file                            |
-| `cat < file.txt`             | Read content from file as input                |
+| `cat < file.txt`             | Works the same way as `cat file.txt`           |
 | `cat file1.txt > file2.txt`  | Overwrite `file2.txt` with `file1.txt` content |
 | `cat file1.txt >> file2.txt` | Append `file1.txt` content to `file2.txt`      |
 
