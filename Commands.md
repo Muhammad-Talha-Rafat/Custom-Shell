@@ -77,7 +77,8 @@
 
 | Command   | Example                              | Description                                 |
 | --------- | ------------------------------------ | ------------------------------------------- |
-| `date`    | `date`                               | Show current date and time                  |
+| `date`    | `date`                               | Show current date                           |
+| `time`    | `time`                               | Show current time                           |
 | `clear`   | `clear`                              | Clear terminal screen                       |
 | `history` | `history`                            | Show previously run commands                |
 | `exit`    | `exit`                               | Terminates the session and ends the program |
