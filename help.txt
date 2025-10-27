@@ -13,6 +13,8 @@ touch    : Create a file or update its timestamp
 echo     : Print text to screen or file
 history  : Show previous commands
 clear    : Clear the screen
+date     : Show current date
+time     : Show current time
 grep     : Search for a pattern in a file
 find     : Search for files matching a pattern
 help     : Show help for commands
