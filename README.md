@@ -85,21 +85,6 @@ g++ shell.cpp -o shell
 
 ---
 
-## 📚 Example Session
-```
-rose@darkshell> pwd
-/home/rose/projects
-rose@darkshell> mkdir test
-rose@darkshell> cd test
-rose@darkshell> touch hello.txt
-rose@darkshell> ls
-hello.txt
-rose@darkshell> echo "Custom Shell Works!" > hello.txt
-rose@darkshell> cat hello.txt
-Custom Shell Works!
-rose@darkshell> exit
-```
-
 ---
 
 ## 🔮 Possible Future Enhancements
