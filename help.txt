@@ -1,0 +1,21 @@
+ls       : List files in the current directory
+pwd      : Show current working directory
+cd       : Change directory (absolute or relative)
+mkdir    : Create a new directory
+rmdir    : Delete an empty directory
+rm       : Delete a file
+cp       : Copy a file or directory
+mv       : Move or rename a file or directory
+cat      : Display contents of a file
+head     : Display first lines or bytes of a file
+tail     : Display last lines or bytes of a file
+touch    : Create a file or update its timestamp
+echo     : Print text to screen or file
+history  : Show previous commands
+clear    : Clear the screen
+date     : Show current date
+time     : Show current time
+grep     : Search for a pattern in a file
+find     : Search for files matching a pattern
+help     : Show help for commands
+exit     : Exit the shell
