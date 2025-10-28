@@ -1,0 +1,20 @@
+.../path
+..../dir
+....../
+path/../
+dir/./
+folder/../../
+path//folder
+/folder//sub/
+1folder
+-folder
+@path
+#dir
+folder-name
+folder.name
+folder name
+folder@name
+path/dir-name/
+C:\path\folder
+.\dir\subdir
+..\data\
