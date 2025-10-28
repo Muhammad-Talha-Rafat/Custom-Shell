@@ -6,8 +6,7 @@
 
 | Command    | Example                 | Description                                      |
 | ---------- | ----------------------- | ------------------------------------------------ |
-| `ls`       | `ls`                    | List files in current directory                  |
-| `ls -l`    | `ls -l`                 | List files with name, size, and date             |
+| `ls`       | `ls [directory]`        | List files in `directory`                        |
 | `pwd`      | `pwd`                   | Show current working directory                   |
 | `cd`       | `cd /path/to/directory` | Change directory (absolute or relative)          |
 | `cd ~`     | `cd`                    | Return to home directory                         |
@@ -19,6 +18,7 @@
 
 **Notes:**
 
+* `ls` with `-l` will list files with name, size, and date.
 * `cd` will fail if the path doesn’t exist or is a file.
 * `mkdir` will fail if directory already exists.
 * `rm folder` without `-r` will fail if folder is not empty.
