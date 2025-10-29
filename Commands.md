@@ -119,7 +119,7 @@
 | `echo`  | `echo < "text"`                       | Works the same way as `echo "text"`                         |
 |         | `echo "text" > file.txt`              | Overwrite "`text`" with `file.txt` content                  |
 |         | `echo "text" >> file.txt`             | Append "`text`" to `file.txt`                               |
-| `ls`    | `ls < folder/file.txt`                | Works the same way as `ls folder`                           |
+| `ls`    | `ls < folder`                         | Works the same way as `ls folder`                           |
 |         | `ls > file.txt`                       | Save listing to `file.txt`                                  |
 |         | `ls -l >> file.txt`                   | Append long-format listing to `file.txt`                    |
 | `grep`  | `grep "error" < file.txt`             | Works the same way as `grep "error" file.txt`               |
