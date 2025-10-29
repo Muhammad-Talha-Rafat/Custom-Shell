@@ -111,34 +111,23 @@
 
 ## **6️⃣ Redirect Operators**
 
-| Operation Example            | Description                                    |
-| ---------------------------- | ---------------------------------------------- |
-| `cat < file.txt`             | Works the same way as `cat file.txt`           |
-| `cat file1.txt > file2.txt`  | Overwrite `file2.txt` with `file1.txt` content |
-| `cat file1.txt >> file2.txt` | Append `file1.txt` content to `file2.txt`      |
-
-| Command | Example Usage                | Description                                    |
-| ------- | ---------------------------- | ---------------------------------------------- |
-| `cat`   | `cat < file.txt`             | Works the same way as `cat file.txt`           |
-|         | `cat file1.txt > file2.txt`  | Overwrite `file2.txt` with `file1.txt` content |
-|         | `cat file1.txt >> file2.txt` | Append `file1.txt` content to `file2.txt`      |
-| ------- | ---------------------------- | ---------------------------------------------- |
-| `echo`  | `cat < file.txt`            | Works the same way as `cat file.txt`           |
-|         | `cat file1.txt > file2.txt`  | Overwrite `file2.txt` with `file1.txt` content |
-|         | `cat file1.txt >> file2.txt` | Append `file1.txt` content to `file2.txt`      |
-| ------- | ---------------------------- | ---------------------------------------------- |
-| `ls`    | `ls > file.txt`              | Works the same way as `cat file.txt`           |
-|         | `ls -l >> file.txt`          | Append `file1.txt` content to `file2.txt`      |
-| ------- | ---------------------------- | ---------------------------------------------- |
-| `grep`  | `grep < file.txt`            | Works the same way as `cat file.txt`           |
-|         | `cat file1.txt > file2.txt`  | Overwrite `file2.txt` with `file1.txt` content |
-|         | `cat file1.txt >> file2.txt` | Append `file1.txt` content to `file2.txt`      |
-| ------- | ---------------------------- | ---------------------------------------------- |
-| `find`  | `cat < file.txt`            | Works the same way as `cat file.txt`           |
-|         | `cat file1.txt > file2.txt`  | Overwrite `file2.txt` with `file1.txt` content |
-|         | `cat file1.txt >> file2.txt` | Append `file1.txt` content to `file2.txt`      |
-| ------- | ---------------------------- | ---------------------------------------------- |
-
+| Command | Example Usage                         | Description                                                 |
+| ------- | ------------------------------------- | ----------------------------------------------------------- |
+| `cat`   | `cat < file.txt`                      | Works the same way as `cat file.txt`                        |
+|         | `cat file1.txt > file2.txt`           | Overwrite `file2.txt` with `file1.txt` content              |
+|         | `cat file1.txt >> file2.txt`          | Append `file1.txt` content to `file2.txt`                   |
+| `echo`  | `echo < "text"`                       | Works the same way as `echo "text"`                         |
+|         | `echo "text" > file.txt`              | Overwrite "`text`" with `file.txt` content                  |
+|         | `echo "text" >> file.txt`             | Append "`text`" to `file.txt`                               |
+| `ls`    | `ls < folder/file.txt`                | Works the same way as `ls folder`                           |
+|         | `ls > file.txt`                       | Save listing to `file.txt`                                  |
+|         | `ls -l >> file.txt`                   | Append long-format listing to `file.txt`                    |
+| `grep`  | `grep "error" < file.txt`             | Works the same way as `grep "error" file.txt`               |
+|         | `grep "error" file1.txt > file2.txt`  | Overwrite matching lines of `file1.txt` in `file2.txt`      |
+|         | `grep "error" file1.txt >> file2.txt` | Append matching lines of `file1.txt` to `file2.txt`         |
+| `find`  | `find . -name "*.py" < file.txt`      | Works the same way as `file . -name "*.py"`                 |
+|         | `find . -size +1M > file.txt`         | Save filenames of all files greater than 1 MB in `file.txt` |
+|         | `find . -type f >> file.txt`          | Append all filenames to `file.txt`                          |
 
 **Notes:**
 
