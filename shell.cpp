@@ -46,7 +46,7 @@ namespace SHELL
         m["cd"]             = regex("^cd(\\s+~|\\s+" + path_dir + ")?$");
         m["mkdir"]          = regex("^mkdir(\\s+" + path_dir + ")+$");
         m["rmdir"]          = regex("^rmdir(\\s+" + path_dir + ")+$");
-        m["rm"]             = regex("^rm\\s+(" + path_file + "|-r " + path_dir + "|" + _glob + ")$");
+        m["rm"]             = regex("^rm((\\s+(" + path_file + "|" + _glob + "))+|\\s+-r(\\s+" + path_dir + ")+)$");
 
         m["touch"]          = regex("^touch\\s+" + path_file + "$");
         m["echo"]           = regex("^echo(\\s+<)?(\\s+\"[^\"]*\")+(\\s+(>|>>)\\s+" + path_file + ")?$");
@@ -63,7 +63,7 @@ namespace SHELL
         const string _type  = "-type\\s+(f|d)";
         const string _size  = "-size\\s+(\\+|-)?[0-9]+(C|K|M)";
 
-        // m["find"]           = regex("^find\\s+" + path_dir + "(\\s+" + _name + "|" + _type + "|" + _size + ")+(\\s+(>|<|>>)\\s+[A-Za-z_][A-Za-z_0-9]*\\.[A-Za-z])?$");
+        m["find"]           = regex("^find\\s+" + path_dir + "(\\s+(" + _name + "|" + _type + "|" + _size + "))*(\\s+<\\s+" + path_file + ")?(\\s+(>|>>)\\s+" + path_file + ")?$");
 
         return m;
     }();

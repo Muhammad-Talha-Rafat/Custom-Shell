@@ -13,6 +13,34 @@ ls -l >> file.txt
 ls -l folder > file.txt
 ls -l folder >> file.txt
 
+cd
+cd folder
+cd ..
+cd ~
+cd ../..
+cd ../folder
+cd /home/user
+cd ./folder
+cd ../../folder
+cd /var/log
+
+mkdir folder
+mkdir folder1 folder2
+
+rmdir folder
+rmdir folder1 folder2
+
+rm file.txt
+rm file1.txt file2.txt
+rm *.txt
+rm *.txt *.py
+rm file.txt *.py
+rm -r folder
+rm -r folder1 folder2
+rm -r folder1 folder2 folder3
+
+touch file.txt
+
 echo ""
 echo "text"
 echo "text" "more text"
@@ -26,6 +54,14 @@ echo < "text" > file.txt
 echo < "text" >> file.txt
 echo < "text" "text" > file.txt
 echo < "text" "text" >> file.txt
+
+cp file.txt note.txt
+cp file.txt folder/
+cp -r folder1 folder2
+
+mv file.txt note.txt
+mv file.txt folder
+mv folder1 folder2
 
 cat file.txt
 cat < file.txt
@@ -53,24 +89,24 @@ head -c 7 < file.txt > note.txt
 head -c 7 file.txt >> note.txt
 head -c 7 < file.txt >> note.txt
 
-head file.txt
-head < file.txt
-head file.txt > note.txt
-head < file.txt > note.txt
-head file.txt >> note.txt
-head < file.txt >> note.txt
-head -n 5 file.txt
-head -n 5 < file.txt
-head -n 5 file.txt > note.txt
-head -n 5 < file.txt > note.txt
-head -n 5 file.txt >> note.txt
-head -n 5 < file.txt >> note.txt
-head -c 7 file.txt
-head -c 7 < file.txt
-head -c 7 file.txt > note.txt
-head -c 7 < file.txt > note.txt
-head -c 7 file.txt >> note.txt
-head -c 7 < file.txt >> note.txt
+tail file.txt
+tail < file.txt
+tail file.txt > note.txt
+tail < file.txt > note.txt
+tail file.txt >> note.txt
+tail < file.txt >> note.txt
+tail -n 5 file.txt
+tail -n 5 < file.txt
+tail -n 5 file.txt > note.txt
+tail -n 5 < file.txt > note.txt
+tail -n 5 file.txt >> note.txt
+tail -n 5 < file.txt >> note.txt
+tail -c 7 file.txt
+tail -c 7 < file.txt
+tail -c 7 file.txt > note.txt
+tail -c 7 < file.txt > note.txt
+tail -c 7 file.txt >> note.txt
+tail -c 7 < file.txt >> note.txt
 
 grep "error" file.txt
 grep -i "error" file.txt
@@ -149,3 +185,66 @@ grep -i -n -w -c -l -o "error" file.txt > output.txt
 grep -i -n -w -c -l -o "error" file.txt >> output.txt
 grep -i -n -w -c -l -o "error" < input.txt
 
+find .
+find . -name "*.txt"
+find . -iname "*.txt"
+find . -type f
+find . -type d
+find . -size +10k
+find . -size -5M
+find . -size 100c
+find . -name "*.txt" -type f
+find . -iname "*.txt" -type f
+find . -name "*.txt" -type d
+find . -iname "*.txt" -type d
+find . -name "*.txt" -size +10k
+find . -iname "*.txt" -size +10k
+find . -type f -size +10k
+find . -type d -size -1M
+find . -name "*.txt" -type f -size +10k
+find . -iname "*.txt" -type d -size -1M
+find folder
+find folder -name "*.py"
+find folder -iname "*.py"
+find folder -type f
+find folder -type d
+find folder -size +1M
+find folder -name "*.py" -type f
+find folder -iname "*.py" -type f
+find folder -name "*.py" -size +1M
+find folder -type f -size +1M
+find folder -name "*.py" -type f -size +1M
+find . > result.txt
+find . >> result.txt
+find . -name "*.txt" > result.txt
+find . -iname "*.txt" > result.txt
+find . -type f > result.txt
+find . -size +10k > result.txt
+find . -name "*.txt" -type f > result.txt
+find . -iname "*.txt" -type d > result.txt
+find . -name "*.txt" -type f -size +10k > result.txt
+find . -iname "*.txt" -type d -size -1M > result.txt
+find . >> result.txt
+find . -name "*.txt" >> result.txt
+find . -iname "*.txt" >> result.txt
+find . -type f >> result.txt
+find . -size +10k >> result.txt
+find . -name "*.txt" -type f >> result.txt
+find . -iname "*.txt" -type d >> result.txt
+find . -name "*.txt" -type f -size +10k >> result.txt
+find . -iname "*.txt" -type d -size -1M >> result.txt
+find . < input.txt
+find . -name "*.txt" < input.txt
+find . -iname "*.txt" < input.txt
+find . -type f < input.txt
+find . -size +10k < input.txt
+find . -name "*.txt" -type f < input.txt
+find . -iname "*.txt" -type d < input.txt
+find . -name "*.txt" -type f -size +10k < input.txt
+find . -iname "*.txt" -type d -size -1M < input.txt
+find . -name "*.txt" < input.txt > result.txt
+find . -iname "*.txt" < input.txt >> result.txt
+find . -type f < input.txt > result.txt
+find . -size +10k < input.txt >> result.txt
+find . -name "*.txt" -type f -size +10k < input.txt > result.txt
+find . -iname "*.txt" -type d -size -1M < input.txt >> result.txt
