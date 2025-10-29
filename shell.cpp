@@ -40,28 +40,30 @@ namespace SHELL
         m["date"]           = regex("^date$");
         m["time"]           = regex("^time$");
 
-        m["ls"]             = regex("^ls(\\s+-l)?(\\s+" + path_dir + ")?$");
+        const string _glob  = "\\*\\.[A-Za-z]+";
+
+        m["ls"]             = regex("^ls(\\s+-l)?(\\s+(<\\s+)?" + path_dir + ")?(\\s+(>>|>)\\s+" + path_file + ")?$");
         m["cd"]             = regex("^cd(\\s+~|\\s+" + path_dir + ")?$");
         m["mkdir"]          = regex("^mkdir(\\s+" + path_dir + ")+$");
         m["rmdir"]          = regex("^rmdir(\\s+" + path_dir + ")+$");
-        m["rm"]             = regex("^rm\\s+(" + path_file + "|-r " + path_dir + "|\\*\\.[A-Za-z]+)$");
+        m["rm"]             = regex("^rm\\s+(" + path_file + "|-r " + path_dir + "|" + _glob + ")$");
 
         m["touch"]          = regex("^touch\\s+" + path_file + "$");
-        m["echo"]           = regex("^echo\\s+\"[^\"]*\"(\\s+\"[^\"]*\")*(\\s+(>|>>)\\s+" + path_file + ")?$");
+        m["echo"]           = regex("^echo(\\s+<)?(\\s+\"[^\"]*\")+(\\s+(>|>>)\\s+" + path_file + ")?$");
         m["cp"]             = regex("^cp\\s+(" + path_file + "\\s+(" + path_file + "|" + path_dir + ")|-r\\s+" + path_dir + "\\s+" + path_dir + ")$");
         m["mv"]             = regex("^mv\\s+(" + path_file + "\\s+(" + path_file + "|" + path_dir + ")|" + path_dir + "\\s+" + path_dir + ")$");
 
-        m["cat"]            = regex("^cat\\s+(<\\s+)?" + path_file + "(\\s+((>|>>)\\s+)?" + path_file + ")?$");
-        m["head"]           = regex("^head\\s+((-n|-c)\\s+[0-9]+\\s+)?" + path_file + "$");
-        m["tail"]           = regex("^tail\\s+((-n|-c)\\s+[0-9]+\\s+)?" + path_file + "$");
+        m["cat"]            = regex("^cat\\s+(<\\s+)?" + path_file + "(\\s+(>|>>)\\s+" + path_file + ")?$");
+        m["head"]           = regex("^head\\s+((-n|-c)\\s+[0-9]+\\s+)?(<\\s+)?" + path_file + "(\\s+(>|>>)\\s+" + path_file + ")?$");
+        m["tail"]           = regex("^tail\\s+((-n|-c)\\s+[0-9]+\\s+)?(<\\s+)?" + path_file + "(\\s+(>|>>)\\s+" + path_file + ")?$");
 
-        m["grep"]           = regex("^grep\\s+((-i|-n|-w|-c|-l|-o)+\\s+)*\"[^\"]*\"\\s+(" + path_file + "|(" + path_dir + ")?\\*\\.[A-Za-z]+)$");
+        m["grep"]           = regex("^grep\\s+((-i|-n|-w|-c|-l|-o)\\s+)*\"[^\"]*\"(\\s+" + path_file + "(\\s+(>|>>)\\s+" + path_file + ")?|(\\s+<\\s+" + path_file + "))$");
 
         const string _name  = "(-name|-iname)\\s+\"([a-zA-Z_][a-zA-Z_0-9]+|\\*)\\.[A-Za-z]+\"";
         const string _type  = "-type\\s+(f|d)";
         const string _size  = "-size\\s+(\\+|-)?[0-9]+(C|K|M)";
 
-        m["find"]           = regex("^find\\s+" + path_dir + "(\\s+" + _name + "|" + _type + "|" + _size + ")+$");
+        // m["find"]           = regex("^find\\s+" + path_dir + "(\\s+" + _name + "|" + _type + "|" + _size + ")+(\\s+(>|<|>>)\\s+[A-Za-z_][A-Za-z_0-9]*\\.[A-Za-z])?$");
 
         return m;
     }();

@@ -3,6 +3,7 @@
         "regex": "cpp",
         "optional": "cpp",
         "variant": "cpp",
-        "stdexcept": "cpp"
+        "stdexcept": "cpp",
+        "iostream": "cpp"
     }
 }

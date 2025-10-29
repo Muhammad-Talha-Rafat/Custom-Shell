@@ -100,3 +100,79 @@ int main() {
     }
     return 0;
 }
+
+
+
+/*
+
+find .
+find .          -name   "*.txt"
+find .          -iname  "*.txt"
+find .          -type   f
+find .          -type   d
+find .          -size   +10K
+find .          -size   -5M
+find .          -size   100C
+
+find .          -name   "*.txt" -type f
+find .          -iname  "*.txt" -type f
+find .          -name   "*.txt" -type d
+find .          -iname  "*.txt" -type d
+find .          -name   "*.txt" -size +10k
+find .          -iname  "*.txt" -size +10k
+find .          -type   f -size +10k
+find .          -type   d -size -1M
+find .          -name   "*.txt" -type f -size +10k
+find .          -iname  "*.txt" -type d -size -1M
+
+find folder
+find folder     -name   "*.py"
+find folder     -iname  "*.py"
+find folder     -type   f
+find folder     -type   d
+find folder     -size   +1M
+find folder     -name   "*.py" -type f
+find folder     -iname  "*.py" -type f
+find folder     -name   "*.py" -size +1M
+find folder     -type   f -size +1M
+find folder     -name   "*.py" -type f -size +1M
+
+find .      >                       result.txt
+find .      >>                      result.txt
+find .          -name   "*.txt" > result.txt
+find .          -iname  "*.txt" > result.txt
+find .          -type   f > result.txt
+find .          -size   +10K > result.txt
+find .          -name   "*.txt" -type f > result.txt
+find .          -iname  "*.txt" -type d > result.txt
+find .          -name   "*.txt" -type f -size +10k > result.txt
+find .          -iname  "*.txt" -type d -size -1M > result.txt
+
+find .      >>              result.txt
+find .          -name   "*.txt" >> result.txt
+find .          -iname  "*.txt" >> result.txt
+find .          -type   f >> result.txt
+find .          -size   +10k >> result.txt
+find .          -name   "*.txt" -type f >> result.txt
+find .          -iname  "*.txt" -type d >> result.txt
+find .          -name   "*.txt" -type f -size +10k >> result.txt
+find .          -iname  "*.txt" -type d -size -1M >> result.txt
+
+find .      <               input.txt
+find .          -name   "*.txt" < input.txt
+find .          -iname  "*.txt" < input.txt
+find .          -type   f < input.txt
+find .          -size   +10k < input.txt
+find .          -name   "*.txt" -type f < input.txt
+find .          -iname  "*.txt" -type d < input.txt
+find .          -name   "*.txt" -type f -size +10k < input.txt
+find .          -iname  "*.txt" -type d -size -1M < input.txt
+
+find .          -name   "*.txt" < input.txt > result.txt
+find .          -iname  "*.txt" < input.txt >> result.txt
+find .          -type   f < input.txt > result.txt
+find .          -size   +10k < input.txt >> result.txt
+find .          -name   "*.txt" -type f -size +10k < input.txt > result.txt
+find .          -iname  "*.txt" -type d -size -1M < input.txt >> result.txt
+
+*/
