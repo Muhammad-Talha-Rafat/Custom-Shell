@@ -1,17 +1,25 @@
+pwd
+date
+time
+help
+history
+clear
+exit
+
 ls
-ls folder
-ls < folder
-ls > file.txt
-ls >> file.txt
-ls folder > file.txt
-ls folder >> file.txt
-ls -l
-ls -l folder
-ls -l < folder
-ls -l > file.txt
-ls -l >> file.txt
-ls -l folder > file.txt
-ls -l folder >> file.txt
+ls          folder
+ls      <   folder
+ls                  >   file.txt
+ls                  >>  file.txt
+ls          folder  >   file.txt
+ls          folder  >>  file.txt
+ls  -l
+ls  -l      folder
+ls  -l  <   folder
+ls  -l              >   file.txt
+ls  -l              >>  file.txt
+ls  -l      folder  >   file.txt
+ls  -l      folder  >>  file.txt
 
 cd
 cd folder

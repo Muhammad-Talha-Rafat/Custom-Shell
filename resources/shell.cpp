@@ -1,13 +1,10 @@
-#include <string>
-#include <unordered_set>
-#include <unordered_map>
-#include <regex>
-#include <vector>
+#include "shell.h"
+
 using namespace std;
 
 namespace SHELL
 {
-    extern const unordered_set<string> KEYWORDS = {
+    const unordered_set<string> KEYWORDS = {
         "ls", "pwd", "cd", "mkdir", "rmdir", "rm",
         "cp", "mv",
         "cat", "head", "tail",
@@ -16,7 +13,7 @@ namespace SHELL
         "grep", "find"
     };
 
-    extern const unordered_map<string, unordered_set<string>> OPTIONS = {
+    const unordered_map<string, unordered_set<string>> OPTIONS = {
         {"ls", {"-l"}},
         {"rm", {"-r"}},
         {"cp", {"-r"}},
@@ -26,10 +23,10 @@ namespace SHELL
         {"find", {"-name", "-iname", "-type", "-size"}}
     };
 
-    extern const string path_dir = R"((?:\.?\.?/|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?)";
-    extern const string path_file = R"((?:\.?\.?/|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?[A-Za-z_][A-Za-z0-9_]*\.[A-Za-z]+)";
+    const string path_dir = R"((?:\.?\.?/|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?)";
+    const string path_file = R"((?:\.?\.?/|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?[A-Za-z_][A-Za-z0-9_]*\.[A-Za-z]+)";
 
-    extern const unordered_map<string, regex> RULES = []() {
+    const unordered_map<string, regex> RULE = []() {
         unordered_map<string, regex> m;
 
         m["pwd"]            = regex("^pwd$");
