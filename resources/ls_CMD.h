@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+
+#include "command.h"
 #include "shell.h"
 
 using namespace std;

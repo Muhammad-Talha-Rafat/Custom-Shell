@@ -1,11 +1,16 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 using namespace std;
 
 class ls_CMD;
 class cd_CMD;
+class mkdir_CMD;
+class rmdir_CMD;
+class rm_CMD;
+class touch_CMD;
 
 class COMMAND
 {

@@ -48,6 +48,7 @@ rm -r folder1 folder2
 rm -r folder1 folder2 folder3
 
 touch file.txt
+touch file.txt note.txt
 
 echo ""
 echo "text"
@@ -256,4 +257,3 @@ find . -type f < input.txt > result.txt
 find . -size +10k < input.txt >> result.txt
 find . -name "*.txt" -type f -size +10k < input.txt > result.txt
 find . -iname "*.txt" -type d -size -1M < input.txt >> result.txt
-

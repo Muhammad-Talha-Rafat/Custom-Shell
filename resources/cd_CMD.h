@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+
+#include "command.h"
 #include "shell.h"
 
 using namespace std;
@@ -20,7 +22,7 @@ public:
     bool validate(const string& cmd) override {
         stringstream ss(cmd);
         string token;
-        ss >> token; // consume "ls"
+        ss >> token; // consume "cd"
 
         if (ss >> token) {
             if (regex_match(token, regex(path_dir)) || token == "~")
