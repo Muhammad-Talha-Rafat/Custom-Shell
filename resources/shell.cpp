@@ -39,7 +39,7 @@ namespace SHELL
 
         const string _glob  = "\\*\\.[A-Za-z]+";
 
-        m["ls"]             = regex("^ls(\\s+-l)?(\\s+(<\\s+)?" + path_dir + ")?(\\s+(>>|>)\\s+" + path_file + ")?$");
+        m["ls"]             = regex("^ls(\\s+-[a-z])?(\\s+(<\\s+)?" + path_dir + ")?(\\s+(>>|>)\\s+" + path_file + ")?$");
         m["cd"]             = regex("^cd(\\s+~|\\s+" + path_dir + ")?$");
         m["mkdir"]          = regex("^mkdir(\\s+" + path_dir + ")+$");
         m["rmdir"]          = regex("^rmdir(\\s+" + path_dir + ")+$");

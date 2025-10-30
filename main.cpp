@@ -13,8 +13,8 @@ int main() {
         getline(cin, cmd);
         try {
             auto command = COMMAND::dispatch(cmd);
-            if (command->validate(cmd))
-                command->execute();
+            command->validate(cmd);
+            command->execute();
         }
         catch (const exception& e) {
             cerr << e.what() << endl;
@@ -23,3 +23,4 @@ int main() {
     
     return 0;
 }
+
