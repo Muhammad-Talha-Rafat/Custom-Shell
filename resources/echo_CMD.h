@@ -6,6 +6,8 @@
 #include "command.h"
 #include "shell.h"
 
+// visual studio
+
 using namespace std;
 using namespace SHELL;
 
