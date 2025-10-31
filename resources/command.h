@@ -11,6 +11,12 @@ class mkdir_CMD;
 class rmdir_CMD;
 class rm_CMD;
 class touch_CMD;
+class echo_CMD;
+class cp_CMD;
+class mv_CMD;
+class cat_CMD;
+class head_CMD;
+class tail_CMD;
 
 class COMMAND
 {
