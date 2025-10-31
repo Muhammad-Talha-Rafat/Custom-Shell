@@ -13,8 +13,8 @@ class mv_CMD : public COMMAND
 {
 private:
 
-    vector<string> filename;
-    bool recursive = false;
+    string source;
+    string destination;
 
 public:
 
@@ -24,17 +24,31 @@ public:
 
     bool validate(const string& cmd) override {
         stringstream ss(cmd);
-        string token;
-        ss >> token; // consume "touch"
+        string keyword;
+        ss >> keyword; // consume "mv"
 
-        if (!(ss >> token))
-            throw invalid_argument("touch: missing file name");
+        if (!(ss >> source))
+            throw invalid_argument("mv: expected a file or directory name");
 
-        do {
-            if (regex_match(token, regex(path_file)))
-                filename.push_back(token);
-            else throw invalid_argument("touch: '" + token + "': expected a file name");
-        } while (ss >> token);
+        if (regex_match(source, regex(path_file))) {
+            if (!(ss >> destination))
+                throw invalid_argument("mv: expected a destination");
+            else if (!regex_match(destination, regex(path_file)) && !regex_match(destination, regex(path_dir)))
+                throw invalid_argument("mv: '" + destination + "': invalid destination");
+        }
+        else if (regex_match(source, regex(path_dir))) {
+            if (!(ss >> destination))
+                throw invalid_argument("mv: expected a destination");
+            else if (!regex_match(destination, regex(path_dir)))
+                throw invalid_argument("mv: '" + destination + "': expected a directory");
+        }
+        else {
+            if (source[0] == '-') throw invalid_argument("mv: no option supported");
+            else throw invalid_argument("mv: '" + source + "': invalid source");
+        }
+
+
+        if (!ss.eof()) throw invalid_argument("mv: too many arguments");
 
         return true;
     }
