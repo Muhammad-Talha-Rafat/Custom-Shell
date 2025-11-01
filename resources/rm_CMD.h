@@ -44,7 +44,7 @@ public:
             else throw invalid_argument("rm: '" + token + "': invalid directory");
         } while (ss >> token);
         else do {
-            if (regex_match(token, regex(path_file)))
+            if (regex_match(token, regex(path_file)) || regex_match(token, regex("\\*\\.[a-zA-Z]+")))
                 filename.push_back(token);
             else throw invalid_argument("rm: '" + token + "': invalid filename");
         } while (ss >> token);

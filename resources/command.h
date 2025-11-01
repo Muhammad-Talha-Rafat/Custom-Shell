@@ -19,6 +19,11 @@ class head_CMD;
 class tail_CMD;
 class grep_CMD;
 class find_CMD;
+class pwd_MISC;
+class date_MISC;
+class time_MISC;
+class help_MISC;
+class history_MISC;
 
 class COMMAND
 {

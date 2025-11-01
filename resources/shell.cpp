@@ -24,7 +24,8 @@ namespace SHELL
     };
 
     const string path_dir = R"((?:\.?\.?/|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?)";
-    const string path_file = R"((?:\.?\.?/|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?[A-Za-z_][A-Za-z0-9_]*\.[A-Za-z]+)";
+    const string path_file = R"((?:\.?\.?/|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?[A-Za-z][A-Za-z0-9_]*\.[A-Za-z]+)";
+
 
     const unordered_map<string, regex> RULE = []() {
         unordered_map<string, regex> m;
