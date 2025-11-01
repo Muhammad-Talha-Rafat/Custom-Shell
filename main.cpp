@@ -17,7 +17,7 @@ int main() {
             command->execute();
         }
         catch (const exception& e) {
-            cerr << e.what() << endl;
+            cerr << "\033[1;31m" << e.what() << "\033[0m" << endl;
         }
     }
     

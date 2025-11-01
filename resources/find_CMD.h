@@ -13,83 +13,110 @@ class find_CMD : public COMMAND
 {
 private:
 
-    bool _i = false;
-    bool _n = false;
-    bool _w = false;
-    bool _c = false;
-    bool _l = false;
-    bool _o = false;
-    string text;
+    string directory;
+    struct _name {
+        bool _check = false;
+        string _pattern = "";
+    } name;
+    struct _type {
+        bool _check = false;
+        char _type = '\0';
+    } type;
+    struct _size {
+        bool _check = false;
+        char _sign = '\0';
+        int _integer = 0;
+        char _unit = '\0';
+    } size;
     string filename;
     string redirection;
     string rdrfile;
 
 public:
 
-     find_CMD(const string& token) {
+    find_CMD(const string& token) {
         keyword = token;
+        directory = ".";
+        filename = "";
+        redirection = "";
+        rdrfile = "";
     }
 
     bool validate(const string& cmd) override {
         stringstream ss(cmd);
         string token;
-        ss >> token; // consume "grep"
+        ss >> token; // consume "find"
 
         if (!(ss >> token))
-            throw invalid_argument("grep: invalid format");
+            throw invalid_argument("find: invalid format");
+
+        if (!regex_match(token, regex(path_dir)))
+            throw invalid_argument("find: '" + token + "': invalid directory");
+
+        if (!(ss >> token))
+            return true;
 
         auto check_flag = [&](bool& check, const string& option) {
             if (check)
-                throw invalid_argument("grep: '" + option + "': cannot have multiple occurrences of an option");
+                throw invalid_argument("find: '" + option + "': cannot have multiple occurrences of an option");
             check = true;
         };
 
-        while (token[0] == '-' || !ss.eof()) {
-            if (token == "-i") check_flag(_i, token);
-            else if (token == "-n") check_flag(_n, token);
-            else if (token == "-w") check_flag(_w, token);
-            else if (token == "-c") check_flag(_c, token);
-            else if (token == "-l") check_flag(_l, token);
-            else if (token == "-o") check_flag(_o, token);
-            else throw invalid_argument("grep: '" + token + "': option not supported");
-            ss >> token;
-        }
-
-        if (ss.eof())
-            throw invalid_argument("grep: invalid format");
-
-        if (token[0] == '"') { 
-            text = token;
-            while (token[token.length() - 1] != '"') {
-                if (ss.eof())                                                       //  ends without running if there's only one literal,
-                    throw invalid_argument("grep: unexpected end to the string");   //  otherwise keeps on consuming tokens until it either
-                ss >> token;                                                        //  finds a token ending with ", or the command ends.
-                text += " " + token;                                                //  literal can be "text", "more text" or "even more text"
+        while (token[0] == '-' && !ss.eof()) {
+            if (token == "-name") {
+                check_flag(name._check, token);
+                ss >> name._pattern;
+                string pattern = "\"([a-zA-Z][a-zA-Z0-9_]*|\\*)\\.[a-zA-Z]+\""; // regex for name argument
+                if (!regex_match(name._pattern, regex(pattern)))
+                    throw invalid_argument("find: '" + name._pattern + "': invalid '-name' argument");
             }
-        }
-        else throw invalid_argument("grep: '" + token + "': expected some text instead");
+            else if (token == "-type") {
+                check_flag(type._check, token);
+                ss >> type._type;
+                if (type._type != 'f' && type._type != 'd')
+                    throw invalid_argument("find: '" + string(1, type._type) + "': invalid '-type' argument");
+            }
+            else if (token == "-size") {
+                check_flag(size._check, token);
+                ss >> token;
+                string pattern = "[+-]?[0-9]+[CKM]"; // regex for size argument
+                if (!regex_match(token, regex(pattern)))
+                    throw invalid_argument("find: '" + token + "': invalid '-size' argument");
+                if (token[0] == '+' || token[0] == '-') size._sign = token[0];
+                size._integer = stoi(token.substr(size._sign ? 1 : 0, token.length() - (size._sign ? 2 : 1)));
+                size._unit = token[token.length() - 1];
+            }
+            else throw invalid_argument("find: '" + token + "': option not supported");
 
-        if (token == "<")
-            ss >> token; // ignore "<"
-
-        if (!regex_match(token, regex(path_file)))
-            throw invalid_argument("grep: '" + token + "': invalid file name");
-
-        if (ss.eof()) return true;
-        else {
-            ss >> token;
-            if (token != ">" && token != ">>")
-                throw invalid_argument("grep: '" + token + "': expected a forward redirection");
-            redirection = token;
             if (!(ss >> token))
-                throw invalid_argument("grep: missing file name");
-            else if (!regex_match(token, regex(path_file)))
-                throw invalid_argument("grep: '" + token + "': invalid file name");
-            else rdrfile = token;
+                return true;
         }
 
-        if (!(ss.eof()))
-            throw invalid_argument("grep: too many arguments");
+        if (token == "<") {
+            if (!(ss >> filename))
+                throw invalid_argument("find: expected a filename");
+            else if (!regex_match(filename, regex(path_file)))
+                throw invalid_argument("find: '" + filename + "': invalid filename");
+            if (!(ss >> token))
+                return true;
+            if (token == ">" || token == ">>") {
+                if (!(ss >> rdrfile))
+                    throw invalid_argument("find: missing redirected filename");
+                else if (!regex_match(rdrfile, regex(path_file)))
+                    throw invalid_argument("find: '" + rdrfile + "': invalid redirected filename");
+            }
+            else throw invalid_argument("find: '" + token + "': invalid redirection operator");
+        }
+        else if (token == ">" || token == ">>") {
+            if (!(ss >> rdrfile))
+                throw invalid_argument("find: missing redirected filename");
+            else if (!regex_match(rdrfile, regex(path_file)))
+                throw invalid_argument("find: '" + rdrfile + "': invalid redirected filename");
+        }
+        else throw invalid_argument("find: '" + token + "': invalid format");
+
+        if (!ss.eof())
+            throw invalid_argument("find: too many arguments");
 
         return true;
     }
