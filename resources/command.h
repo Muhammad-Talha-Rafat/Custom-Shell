@@ -17,6 +17,8 @@ class mv_CMD;
 class cat_CMD;
 class head_CMD;
 class tail_CMD;
+class grep_CMD;
+class find_CMD;
 
 class COMMAND
 {

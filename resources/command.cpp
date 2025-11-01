@@ -12,6 +12,8 @@
 #include "cat_CMD.h"
 #include "head_CMD.h"
 #include "tail_CMD.h"
+#include "grep_CMD.h"
+#include "find_CMD.h"
 
 unique_ptr<COMMAND> COMMAND::dispatch(const string& cmd) {
     stringstream ss(cmd);
@@ -30,5 +32,7 @@ unique_ptr<COMMAND> COMMAND::dispatch(const string& cmd) {
     else if (token == "cat") return make_unique<cat_CMD>(token);
     else if (token == "head") return make_unique<head_CMD>(token);
     else if (token == "tail") return make_unique<tail_CMD>(token);
+    else if (token == "grep") return make_unique<grep_CMD>(token);
+    else if (token == "find") return make_unique<find_CMD>(token);
     else    throw invalid_argument(token + ": invalid command");
 }
