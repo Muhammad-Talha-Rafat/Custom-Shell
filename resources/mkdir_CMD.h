@@ -26,12 +26,12 @@ public:
         ss >> token; // consume "mkdir"
 
         if (ss.eof())
-            throw invalid_argument("mkdir: expected a directory name"); // only "mkdir"
+            throw invalid_argument(keyword + ": expected a directory"); // only "mkdir"
 
         while (ss >> token) {
             if (regex_match(token, regex(path_dir)))
                 directory.push_back(token);
-            else throw invalid_argument("mkdir: '" + token + "': invalid directory name");
+            else throw invalid_argument(keyword + ": '" + token + "': invalid directory");
         }
 
         return true;

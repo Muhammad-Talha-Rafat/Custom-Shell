@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-#include <string>
 
 using namespace std;
 
@@ -24,6 +22,13 @@ class date_MISC;
 class time_MISC;
 class help_MISC;
 class history_MISC;
+
+#include <memory>
+#include <filesystem>
+
+#include "user.h"
+
+namespace fs = filesystem;
 
 class COMMAND
 {

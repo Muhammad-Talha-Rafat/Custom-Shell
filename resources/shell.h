@@ -12,4 +12,6 @@ namespace SHELL {
     extern const string path_dir;
     extern const string path_file;
     extern const unordered_map<string, regex> RULE;
+    extern const unordered_map<string, string> file_path;
+    extern const unordered_map<string, string> file_content;
 }

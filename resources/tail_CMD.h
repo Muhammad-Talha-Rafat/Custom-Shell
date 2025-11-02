@@ -14,15 +14,20 @@ class tail_CMD : public COMMAND
 private:
 
     string filename;
-    string option;
+    char option;
     size_t size;
-    string rdrfile;
     string redirection;
+    string rdrfile;
 
 public:
 
     tail_CMD(const string& token) {
         keyword = token;
+        filename = "";
+        option = '\0';
+        size = 0;
+        redirection = "";
+        rdrfile = "";
     }
 
     bool validate(const string& cmd) override {
@@ -31,18 +36,18 @@ public:
         ss >> token; // consume "tail"
 
         if (!(ss >> token))
-            throw invalid_argument("tail: expected a filename");
+            throw invalid_argument(keyword + ": expected a filename");
 
         if (token == "-n" || token == "-c") {
-            option = token;
+            option = token[1];
             ss >> token;
             if (regex_match(token, regex("[0-9]*")))
                 size = stoi(token);
-            else throw invalid_argument("tail: '" + token + "': expected an integer");
+            else throw invalid_argument(keyword + ": '" + token + "': expected an integer");
             ss >> token;
         }
         else if (token[0] == '-')
-            throw invalid_argument("tail: '" + token + "': option not supported");
+            throw invalid_argument(keyword + ": '" + token + "': option not supported");
 
         if (token == "<")
             ss >> token; // ignore "<"
@@ -50,15 +55,15 @@ public:
         if (regex_match(token, regex(path_file))) {
             if (!(ss >> token)) return true;
             if (token != ">" && token != ">>")
-                throw invalid_argument("tail: '" + token + "': expected a forward redirection");
+                throw invalid_argument(keyword + ": '" + token + "': expected a forward redirection");
             redirection = token;
             if(!(ss >> token))
-                throw invalid_argument("tail: expected a filename");
+                throw invalid_argument(keyword + ": expected a filename");
             else if (regex_match(token, regex(path_file)))
                 rdrfile = token;
-            else throw invalid_argument("tail: '" + token + "': expected a filename 1");
+            else throw invalid_argument(keyword + ": '" + token + "': expected a filename");
         }
-        else throw invalid_argument("tail: '" + token + "': expected a filename 2");
+        else throw invalid_argument(keyword + ": '" + token + "': expected a filename");
 
         return true;
     }

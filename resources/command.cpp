@@ -37,8 +37,6 @@ unique_ptr<COMMAND> COMMAND::dispatch(const string& cmd) {
     else if (token == "grep")    return make_unique<grep_CMD>(token);
     else if (token == "find")    return make_unique<find_CMD>(token);
     else if (token == "pwd")     return make_unique<pwd_MISC>();
-    else if (token == "date")    return make_unique<date_MISC>();
-    else if (token == "time")    return make_unique<time_MISC>();
     else if (token == "help")    return make_unique<help_MISC>();
     else if (token == "history") return make_unique<history_MISC>();
     else                         throw invalid_argument(token + ": invalid command");

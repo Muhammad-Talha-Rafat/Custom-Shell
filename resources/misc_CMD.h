@@ -4,6 +4,8 @@
 #include <ctime>
 #include <iomanip>
 #include <fstream>
+#include <filesystem>
+#include <unordered_map>
 
 #include "command.h"
 #include "shell.h"
@@ -39,32 +41,6 @@ public:
 
     void execute() override {
         cout << "pwd..." << endl;
-    }
-};
-
-class date_MISC : public misc_CMD
-{
-public:
-
-    date_MISC() : misc_CMD("date") {}
-
-    void execute() override {
-        time_t now = time(nullptr);
-        tm* local = localtime(&now);
-        cout << put_time(local, "%Y-%m-%d") << endl;
-    }
-};
-
-class time_MISC : public misc_CMD
-{
-public:
-
-    time_MISC() : misc_CMD("time") {}
-
-    void execute() override {
-        time_t now = time(nullptr);
-        tm* local = localtime(&now);
-        cout << put_time(local, "%H:%M:%S") << endl;
     }
 };
 
@@ -115,3 +91,4 @@ public:
         file.close();
     }
 };
+

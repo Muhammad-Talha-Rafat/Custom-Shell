@@ -18,4 +18,5 @@ time     : Show current time
 grep     : Search for a pattern in a file
 find     : Search for files matching a pattern
 help     : Show help for commands
+reset    : Reset the file structure and contents
 exit     : Exit the shell

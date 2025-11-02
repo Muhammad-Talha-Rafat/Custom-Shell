@@ -14,7 +14,6 @@ class touch_CMD : public COMMAND
 private:
 
     vector<string> filename;
-    bool recursive = false;
 
 public:
 
@@ -28,12 +27,12 @@ public:
         ss >> token; // consume "touch"
 
         if (!(ss >> token))
-            throw invalid_argument("touch: missing file name");
+            throw invalid_argument(keyword + ": missing file name");
 
         do {
             if (regex_match(token, regex(path_file)))
                 filename.push_back(token);
-            else throw invalid_argument("touch: '" + token + "': expected a file name");
+            else throw invalid_argument(keyword + ": '" + token + "': expected a filename");
         } while (ss >> token);
 
         return true;

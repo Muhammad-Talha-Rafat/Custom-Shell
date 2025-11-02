@@ -48,17 +48,17 @@ public:
         ss >> token; // consume "find"
 
         if (!(ss >> token))
-            throw invalid_argument("find: invalid format");
+            throw invalid_argument(keyword + ": invalid format");
 
         if (!regex_match(token, regex(path_dir)))
-            throw invalid_argument("find: '" + token + "': invalid directory");
+            throw invalid_argument(keyword + ": '" + token + "': invalid directory");
 
         if (!(ss >> token))
             return true;
 
         auto check_flag = [&](bool& check, const string& option) {
             if (check)
-                throw invalid_argument("find: '" + option + "': cannot have multiple occurrences of an option");
+                throw invalid_argument(keyword + ": '" + option + "': cannot have multiple occurrences of an option");
             check = true;
         };
 
@@ -68,25 +68,25 @@ public:
                 ss >> name._pattern;
                 string pattern = "\"([a-zA-Z][a-zA-Z0-9_]*|\\*)\\.[a-zA-Z]+\""; // regex for name argument
                 if (!regex_match(name._pattern, regex(pattern)))
-                    throw invalid_argument("find: '" + name._pattern + "': invalid '-name' argument");
+                    throw invalid_argument(keyword + ": '" + name._pattern + "': invalid '-name' argument");
             }
             else if (token == "-type") {
                 check_flag(type._check, token);
                 ss >> type._type;
                 if (type._type != 'f' && type._type != 'd')
-                    throw invalid_argument("find: '" + string(1, type._type) + "': invalid '-type' argument");
+                    throw invalid_argument(keyword + ": '" + string(1, type._type) + "': invalid '-type' argument");
             }
             else if (token == "-size") {
                 check_flag(size._check, token);
                 ss >> token;
                 string pattern = "[+-]?[0-9]+[CKM]"; // regex for size argument
                 if (!regex_match(token, regex(pattern)))
-                    throw invalid_argument("find: '" + token + "': invalid '-size' argument");
+                    throw invalid_argument(keyword + ": '" + token + "': invalid '-size' argument");
                 if (token[0] == '+' || token[0] == '-') size._sign = token[0];
                 size._integer = stoi(token.substr(size._sign ? 1 : 0, token.length() - (size._sign ? 2 : 1)));
                 size._unit = token[token.length() - 1];
             }
-            else throw invalid_argument("find: '" + token + "': option not supported");
+            else throw invalid_argument(keyword + ": '" + token + "': option not supported");
 
             if (!(ss >> token))
                 return true;
@@ -94,29 +94,29 @@ public:
 
         if (token == "<") {
             if (!(ss >> filename))
-                throw invalid_argument("find: expected a filename");
+                throw invalid_argument(keyword + ": expected a filename");
             else if (!regex_match(filename, regex(path_file)))
-                throw invalid_argument("find: '" + filename + "': invalid filename");
+                throw invalid_argument(keyword + ": '" + filename + "': invalid filename");
             if (!(ss >> token))
                 return true;
             if (token == ">" || token == ">>") {
                 if (!(ss >> rdrfile))
-                    throw invalid_argument("find: missing redirected filename");
+                    throw invalid_argument(keyword + ": missing redirected filename");
                 else if (!regex_match(rdrfile, regex(path_file)))
-                    throw invalid_argument("find: '" + rdrfile + "': invalid redirected filename");
+                    throw invalid_argument(keyword + ": '" + rdrfile + "': invalid redirected filename");
             }
-            else throw invalid_argument("find: '" + token + "': invalid redirection operator");
+            else throw invalid_argument(keyword + ": '" + token + "': invalid redirection operator");
         }
         else if (token == ">" || token == ">>") {
             if (!(ss >> rdrfile))
-                throw invalid_argument("find: missing redirected filename");
+                throw invalid_argument(keyword + ": missing redirected filename");
             else if (!regex_match(rdrfile, regex(path_file)))
-                throw invalid_argument("find: '" + rdrfile + "': invalid redirected filename");
+                throw invalid_argument(keyword + ": '" + rdrfile + "': invalid redirected filename");
         }
-        else throw invalid_argument("find: '" + token + "': invalid format");
+        else throw invalid_argument(keyword + ": '" + token + "': invalid format");
 
         if (!ss.eof())
-            throw invalid_argument("find: too many arguments");
+            throw invalid_argument(keyword + ": too many arguments");
 
         return true;
     }

@@ -26,12 +26,12 @@ public:
         ss >> token; // consume "rmdir"
 
         if (ss.eof())
-            throw invalid_argument("rmdir: expected a directory name"); // only "rmdir"
+            throw invalid_argument(keyword + ": expected a directory"); // only "rmdir"
 
         while (ss >> token) {
             if (regex_match(token, regex(path_dir)))
                 directory.push_back(token);
-            else throw invalid_argument("rmdir: '" + token + "': invalid directory name");
+            else throw invalid_argument(keyword + ": '" + token + "': invalid directory");
         }
 
         return true;

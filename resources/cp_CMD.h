@@ -15,12 +15,15 @@ private:
 
     string source;
     string destination;
-    bool recursive = false;
+    bool _r;
 
 public:
 
     cp_CMD(const string& token) {
         keyword = token;
+        source = "";
+        destination = "";
+        _r = false;
     }
 
     bool validate(const string& cmd) override {
@@ -29,33 +32,33 @@ public:
         ss >> token; // consume "cp"
 
         if (!(ss >> token))
-            throw invalid_argument("cp: expected a file or directory name");
+            throw invalid_argument(keyword + ": expected a file or directory");
 
         if (regex_match(token, regex(path_file))) {
             source = token;
             if (!(ss >> destination))
-                throw invalid_argument("cp: expected a destination");
+                throw invalid_argument(keyword + ": expected a destination");
             else if (!regex_match(destination, regex(path_file)) && !regex_match(destination, regex(path_dir)))
-                throw invalid_argument("cp: '" + destination + "': invalid destination");
+                throw invalid_argument(keyword + ": '" + destination + "': invalid destination");
         }
         else if (regex_match(token, regex(path_dir)))
-            throw invalid_argument("cp: missing '-r' option");
+            throw invalid_argument(keyword + ": missing '-r' option");
         else if (token == "-r") {
-            recursive = true;
+            _r = true;
             if (!(ss >> source))
-                throw invalid_argument("cp: expected a source directory");
+                throw invalid_argument(keyword + ": expected a source directory");
             else if (!regex_match(source, regex(path_dir)))
-                throw invalid_argument("cp: '" + source + "': invalid source");
+                throw invalid_argument(keyword + ": '" + source + "': invalid source");
             if (!(ss >> destination))
-                throw invalid_argument("cp: expected a destination");
+                throw invalid_argument(keyword + ": expected a destination");
             else if (!regex_match(destination, regex(path_dir)))
-                throw invalid_argument("cp: '" + destination + "': invalid destination");
+                throw invalid_argument(keyword + ": '" + destination + "': invalid destination");
         }
         else if (token[0] == '-')
-            throw invalid_argument("cp: invalid option '" + token + "'");
-        else throw invalid_argument("cp: invalid format");
+            throw invalid_argument(keyword + ": '" + token + "': invalid option");
+        else throw invalid_argument(keyword + ": invalid format");
 
-        if (!ss.eof()) throw invalid_argument("cp: too many arguments");
+        if (!ss.eof()) throw invalid_argument(keyword + ": too many arguments");
 
         return true;
     }
