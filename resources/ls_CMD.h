@@ -21,6 +21,7 @@ private:
     fs::path rdrfile;
 
 public:
+
     ls_CMD(const string& token) {
         keyword = token;
         _l = false;
