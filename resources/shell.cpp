@@ -23,9 +23,19 @@ namespace SHELL
         {"find", {"-name", "-iname", "-type", "-size"}}
     };
 
-    const string path_dir = R"((?:\.?\.?/|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?)";
-    const string path_file = R"((?:\.?\.?/|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?[A-Za-z][A-Za-z0-9_]*\.[A-Za-z]+)";
+    const string path_dir = R"((?:\.\./|\./|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?)";
+    const string path_file = R"((?:(?:\.\./|\./|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/)?(([A-Za-z][A-Za-z0-9_]*|\*))\.[A-Za-z]+)";
 
+    static const regex dir_pattern(path_dir);
+    static const regex file_pattern(path_file);
+
+    const bool validate_dir_path(const filesystem::path& path) {
+        return regex_match(path.string(), dir_pattern);
+    }
+
+    const bool validate_file_path(const filesystem::path& path) {
+        return regex_match(path.string(), file_pattern);
+    }
 
     const unordered_map<string, regex> RULE = []() {
         unordered_map<string, regex> m;

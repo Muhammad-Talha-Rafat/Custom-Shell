@@ -12,7 +12,7 @@ class cd_CMD : public COMMAND
 {
 private:
 
-    string directory;
+    fs::path directory;
 
 public:
 
@@ -27,7 +27,7 @@ public:
         ss >> token; // consume "cd"
 
         if (ss >> token) {
-            if (regex_match(token, regex(path_dir)) || token == "~")
+            if (validate_dir_path(token) || token == "~")
                 directory = token;
             else throw invalid_argument(keyword + " '" + token + "': expected a directory");
             if (ss >> token)
@@ -45,7 +45,7 @@ public:
             fs::path relative_path = canonical_path.lexically_relative(noob.home_directory);
             // throw error if current location leads beyond Playground
             if (relative_path.string().rfind("..", 0) == 0)
-                throw invalid_argument(keyword + ": access denied");
+                throw invalid_argument(keyword + ": (error) out of bounds: access denied");
 
             noob.current_directory = canonical_path;
         }

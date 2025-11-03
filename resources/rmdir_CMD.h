@@ -13,7 +13,7 @@ class rmdir_CMD : public COMMAND
 {
 private:
 
-    vector<string> directory;
+    vector<fs::path> directory;
 
 public:
     rmdir_CMD(const string& token) {
@@ -38,6 +38,39 @@ public:
     }
 
     void execute() override {
-        // pass
+
+        for (auto dir: directory) {
+
+            fs::path dir_parent;
+            try {
+                // try to get parent directory
+                dir_parent = fs::canonical(noob.current_directory / dir.parent_path());
+            }
+            catch(...) {
+                throw invalid_argument(keyword + ": '" + dir.parent_path().string() + "': bad parent path");
+            }
+
+            fs::path relative_path = dir_parent.lexically_relative(noob.home_directory);
+            // throw error if given location leads beyond Playground
+            if (relative_path.string().rfind("..", 0) == 0)
+                throw invalid_argument(keyword + ": (out of bounds) access denied");
+
+            // get removing directory location
+            fs::path dir_location = dir_parent / dir.filename();
+
+            // check whether you're foolish enough to be removing the directory where you currently are
+            if (dir_location == noob.current_directory)
+                throw invalid_argument(keyword + ": cannot remove current directory");
+                
+            if (!fs::exists(dir_location))
+                throw invalid_argument(keyword + ": '" + dir.string() + "': no such directory");
+                
+            try {
+                fs::remove(dir_location);
+            }
+            catch (...) {
+                throw invalid_argument(keyword + ": '" + dir.string() + "': couldn't remove (directory is not empty)");
+            }
+        }
     }
 };

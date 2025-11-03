@@ -84,3 +84,40 @@ int main() {
     return 0;
 }
 
+
+
+// #include <iostream>
+// #include <filesystem>
+// #include <regex>
+// using namespace std;
+
+
+// const string path_dir = R"((?:\.\./|\./|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?)";
+// const string path_file = R"((?:(?:\.\./|\./|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/)?(([A-Za-z][A-Za-z0-9_]*|\*))\.[A-Za-z]+)";
+
+// static const regex dir_pattern(path_dir);
+// static const regex file_pattern(path_file);
+
+// const bool validate_dir_path(const filesystem::path& path) {
+//     return regex_match(path.string(), dir_pattern);
+// }
+
+// const bool validate_file_path(const filesystem::path& path) {
+//     return regex_match(path.string(), file_pattern);
+// }
+
+
+// int main() {
+//     filesystem::path file = "../*.txt";
+//     filesystem::path curr = "E:\\Kachra\\OS Labs\\Custom-Shell\\Playground\\Assets";
+
+//     if (validate_file_path(file)) {
+//         filesystem::path extension = file.filename().extension();
+//         curr = filesystem::canonical(curr / file.parent_path());
+//         for (auto item : filesystem::directory_iterator(curr)) {
+//             if (item.path().extension() == extension)
+//                 cout << item.path().filename() << endl;
+//         }
+//         ;
+//     }
+// }

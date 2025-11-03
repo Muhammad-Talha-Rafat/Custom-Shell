@@ -49,14 +49,14 @@ public:
         if (token == "<") {
             if (!(ss >> token)) // ignore "<"
                 throw invalid_argument(keyword + ": expected a directory after '<'");
-            if (!regex_match(token, regex(path_dir)))
+            if (!validate_dir_path(token))
                 throw invalid_argument(keyword + ":  '" + token + "': invalid directory");
             directory = token;
             if (!(ss >> token)) 
                 return true; // command ended after "< folder"
         }
         
-        if (directory.empty() && regex_match(token, regex(path_dir))) {
+        if (directory.empty() && validate_dir_path(token)) {
             directory = token;
             if (!(ss >> token))
                 return true; // command ended after "folder"
@@ -66,7 +66,7 @@ public:
             redirection = token;
             if (!(ss >> rdrfile))
                 throw invalid_argument(keyword + ": expected a filename after '" + redirection + "'");
-            if (!regex_match(rdrfile.string(), regex(path_file)))
+            if (!validate_file_path(rdrfile))
                 throw invalid_argument(keyword + ": '" + rdrfile.string() + "': invalid filename");
             if (ss >> token)
                 throw invalid_argument(keyword + ": too many arguments");
@@ -78,8 +78,14 @@ public:
 
     void execute() override {
 
-        fs::path canonical_path = fs::canonical(noob.current_directory / directory);
         stringstream output;
+
+        fs::path canonical_path = fs::canonical(noob.current_directory / directory);
+
+        fs::path relative_path = canonical_path.lexically_relative(noob.home_directory);
+        // throw error if current location leads beyond Playground
+        if (relative_path.string().rfind("..", 0) == 0)
+            throw invalid_argument(keyword + ": (error) out of bounds: access denied");
 
         for (const auto& entry : fs::directory_iterator(canonical_path)) {
             if (fs::is_regular_file(entry.path())) {
