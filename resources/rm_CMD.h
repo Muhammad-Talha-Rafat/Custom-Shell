@@ -53,7 +53,10 @@ public:
         return true;
     }
 
-    void remove_object(const vector<fs::path>& objects) {
+    void execute() override {
+
+        auto objects = _r ? directories : filenames;
+
         for (const auto& object : objects) {
             fs::path object_parent;
             try {
@@ -93,10 +96,6 @@ public:
                 else fs::remove(object_location);
             }
         }
-    }
 
-    void execute() override {
-        if (_r) remove_object(directories);
-        else remove_object(filenames);
     }
 };
