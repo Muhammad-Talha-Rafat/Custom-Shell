@@ -13,7 +13,7 @@ class echo_CMD : public COMMAND
 {
 private:
 
-    vector<string> text;
+    vector<string> messages;
     string redirection;
     string rdrfile;
 
@@ -35,7 +35,7 @@ public:
                 ss >> token; // ignore "<" 
 
             if (token == ">" || token == ">>") {
-                if (text.empty()) throw invalid_argument(keyword + ": expected some text before '" + token + "'");
+                if (messages.empty()) throw invalid_argument(keyword + ": expected some text before '" + token + "'");
                 else break;
             }
 
@@ -47,12 +47,12 @@ public:
                     ss >> token;                                                            //  finds a token ending with ", or the command ends.
                     literal += " " + token;                                                 //  literal can be "text", "more text" or "even more text"
                 }
-                text.push_back(literal);
+                messages.push_back(literal);
             }
             else throw invalid_argument(keyword + ": '" + token + "': expected some text instead");
         }
 
-        if (text.empty() && ss.eof())
+        if (messages.empty() && ss.eof())
             throw invalid_argument(keyword + ": expected some text after '" + token + "'");
         else if (ss.eof())
             return true;
@@ -72,6 +72,23 @@ public:
     }
 
     void execute() override {
-        // pass
+
+        // stringstream output;
+
+        // for (auto message : messages) {
+        //     message = message.substr(1, message.size() - 2);
+        //     output << message << endl;
+        // }
+        // if (!redirection.empty()) {
+
+        //     fs::path file_location = noob.current_directory / rdrfile;
+        //     fs::path file_folder = file_location.parent_path();
+
+        //     if (file_folder.empty())
+        //         file_folder = noob.current_directory;
+
+        //     ofstream file(rdrfile);
+        // }
+        // cout << output;
     }
 };

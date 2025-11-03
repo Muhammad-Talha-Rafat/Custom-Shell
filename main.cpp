@@ -68,8 +68,8 @@ int main() {
         if (cmd == "exit") break;
         else if (cmd == "clear") system("clear");
         else if (cmd == "pwd")  cout << "\033[2;32m" << shell_location << "\033[0m"  << endl;
-        else if (cmd == "time") cout << put_time(local, "%H:%M:%S") << endl;
-        else if (cmd == "date") cout << put_time(local, "%Y-%m-%d") << endl;
+        else if (cmd == "time") cout << "\033[2;32m" << put_time(local, "%H:%M:%S") << "\033[0m" << endl;
+        else if (cmd == "date") cout << "\033[2;32m" << put_time(local, "%Y-%m-%d") << "\033[0m" << endl;
         else if (cmd == "reset") reset();
         else try {
             auto command = COMMAND::dispatch(cmd);

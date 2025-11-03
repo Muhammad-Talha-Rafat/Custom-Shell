@@ -41,16 +41,14 @@ public:
         else try {
             fs::path canonical_path = fs::canonical(noob.current_directory / directory);
 
-            // see if you can go to from E:/.../Playground to current location
-            fs::path relative_path = canonical_path.lexically_relative(noob.home_directory);
-            // throw error if current location leads beyond Playground
-            if (relative_path.string().rfind("..", 0) == 0)
+            // throw error if reqested location-change leads beyond Playground
+            if (canonical_path.lexically_relative(noob.home_directory).string().rfind("..", 0) == 0)
                 throw invalid_argument(keyword + ": (error) out of bounds: access denied");
 
             noob.current_directory = canonical_path;
         }
         catch (const fs::filesystem_error& e) {
-            throw invalid_argument(keyword + ": no such directory");
+            throw invalid_argument(keyword + ": '" + directory.string() + "': no such directory or path");
         }
     }
 };

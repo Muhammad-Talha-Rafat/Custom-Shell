@@ -4,6 +4,7 @@ time
 help
 history
 clear
+reset
 exit
 
 ls

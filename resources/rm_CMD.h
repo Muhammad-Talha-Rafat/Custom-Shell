@@ -57,7 +57,7 @@ public:
 
         auto objects = _r ? directories : filenames;
 
-        for (const auto& object : objects) {
+        for (auto object : objects) {
             fs::path object_parent;
             try {
                 // try to get parent directory
@@ -67,9 +67,8 @@ public:
                 throw invalid_argument(keyword + ": '" + object.parent_path().string() + "': bad parent path");
             }
 
-            fs::path relative_path = object_parent.lexically_relative(noob.home_directory);
             // throw error if object location leads beyond Playground
-            if (relative_path.string().rfind("..", 0) == 0)
+            if (object_parent.lexically_relative(noob.home_directory).string().rfind("..", 0) == 0)
                 throw invalid_argument(keyword + ": (out of bounds) access denied");
 
             // get removing object location
@@ -96,6 +95,5 @@ public:
                 else fs::remove(object_location);
             }
         }
-
     }
 };

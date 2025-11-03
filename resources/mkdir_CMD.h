@@ -39,7 +39,7 @@ public:
 
     void execute() override {
 
-        for (auto dir: directory) {
+        for (auto dir : directory) {
 
             fs::path dir_parent;
             try {
@@ -50,9 +50,8 @@ public:
                 throw invalid_argument(keyword + ": '" + dir.parent_path().string() + "': bad parent path");
             }
 
-            fs::path relative_path = dir_parent.lexically_relative(noob.home_directory);
             // throw error if given directory location leads beyond Playground
-            if (relative_path.string().rfind("..", 0) == 0)
+            if (dir_parent.lexically_relative(noob.home_directory).string().rfind("..", 0) == 0)
                 throw invalid_argument(keyword + ": (out of bounds) access denied");    
                 
             fs::path dir_location = dir_parent / dir.filename();
