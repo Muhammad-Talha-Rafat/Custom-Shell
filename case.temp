@@ -123,77 +123,20 @@ grep -i "error" file.txt
 grep -n "error" file.txt
 grep -w "error" file.txt
 grep -c "error" file.txt
-grep -l "error" file.txt
-grep -o "error" file.txt
 grep -i -n "error" file.txt
 grep -i -w "error" file.txt
 grep -i -c "error" file.txt
-grep -i -l "error" file.txt
-grep -i -o "error" file.txt
 grep -n -w "error" file.txt
-grep -n -c "error" file.txt
-grep -n -l "error" file.txt
-grep -n -o "error" file.txt
 grep -w -c "error" file.txt
-grep -w -l "error" file.txt
-grep -w -o "error" file.txt
-grep -c -l "error" file.txt
-grep -c -o "error" file.txt
-grep -l -o "error" file.txt
 grep -i -n -w "error" file.txt
-grep -i -n -c "error" file.txt
-grep -i -n -l "error" file.txt
-grep -i -n -o "error" file.txt
 grep -i -w -c "error" file.txt
-grep -i -w -l "error" file.txt
-grep -i -w -o "error" file.txt
-grep -i -c -l "error" file.txt
-grep -i -c -o "error" file.txt
-grep -i -l -o "error" file.txt
 grep -n -w -c "error" file.txt
-grep -n -w -l "error" file.txt
-grep -n -w -o "error" file.txt
-grep -n -c -l "error" file.txt
-grep -n -c -o "error" file.txt
-grep -n -l -o "error" file.txt
-grep -w -c -l "error" file.txt
-grep -w -c -o "error" file.txt
-grep -w -l -o "error" file.txt
-grep -c -l -o "error" file.txt
-grep -i -n -w -c "error" file.txt
-grep -i -n -w -l "error" file.txt
-grep -i -n -w -o "error" file.txt
-grep -i -n -c -l "error" file.txt
-grep -i -n -c -o "error" file.txt
-grep -i -n -l -o "error" file.txt
-grep -i -w -c -l "error" file.txt
-grep -i -w -c -o "error" file.txt
-grep -i -w -l -o "error" file.txt
-grep -i -c -l -o "error" file.txt
-grep -n -w -c -l "error" file.txt
-grep -n -w -c -o "error" file.txt
-grep -n -w -l -o "error" file.txt
-grep -n -c -l -o "error" file.txt
-grep -w -c -l -o "error" file.txt
-grep -i -n -w -c -l "error" file.txt
-grep -i -n -w -c -o "error" file.txt
-grep -i -n -w -l -o "error" file.txt
-grep -i -n -c -l -o "error" file.txt
-grep -i -w -c -l -o "error" file.txt
-grep -n -w -c -l -o "error" file.txt
-grep -i -n -w -c -l -o "error" file.txt
 grep "error" file.txt > out.txt
 grep "error" file.txt >> out.txt
 grep "error" < input.txt
-grep -i -n "error" file.txt > out.txt
-grep -i -n "error" file.txt >> out.txt
-grep -i -n "error" < input.txt
-grep -w -c -l "error" file.txt > result.txt
-grep -w -c -l "error" file.txt >> result.txt
-grep -w -c -l "error" < data.txt
-grep -i -n -w -c -l -o "error" file.txt > output.txt
-grep -i -n -w -c -l -o "error" file.txt >> output.txt
-grep -i -n -w -c -l -o "error" < input.txt
+grep -i "error" file.txt > out.txt
+grep -i "error" file.txt >> out.txt
+grep -i "error" < input.txt
 
 find .
 find . -name "*.txt"

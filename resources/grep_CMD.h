@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
+#include <string>
 
 #include "command.h"
 #include "shell.h"
@@ -17,12 +17,10 @@ private:
     bool _n;
     bool _w;
     bool _c;
-    bool _l;
-    bool _o;
     string text;
-    string filename;
+    fs::path filename;
     string redirection;
-    string rdrfile;
+    fs::path rdrfile;
 
 public:
 
@@ -32,8 +30,6 @@ public:
         _n = false;
         _w = false;
         _c = false;
-        _l = false;
-        _o = false;
         text = "";
         filename = "";
         redirection = "";
@@ -59,8 +55,6 @@ public:
             else if (token == "-n") check_flag(_n, token);
             else if (token == "-w") check_flag(_w, token);
             else if (token == "-c") check_flag(_c, token);
-            else if (token == "-l") check_flag(_l, token);
-            else if (token == "-o") check_flag(_o, token);
             else throw invalid_argument(keyword + ": '" + token + "': option not supported");
             ss >> token;
         }
@@ -83,8 +77,10 @@ public:
         if (token == "<")
             ss >> token; // ignore "<"
 
-        if (!regex_match(token, regex(path_file)))
+        if (!validate_file_path(token))
             throw invalid_argument(keyword + ": '" + token + "': invalid file name");
+
+        filename = token;
 
         if (ss.eof()) return true; // grep [options] [text] [file] only
         else { // grep [options] [text] [file] [redirected file]
@@ -94,7 +90,7 @@ public:
             redirection = token;
             if (!(ss >> token))
                 throw invalid_argument(keyword + ": missing file name");
-            else if (!regex_match(token, regex(path_file)))
+            else if (!validate_file_path(token))
                 throw invalid_argument(keyword + ": '" + token + "': invalid file name");
             else rdrfile = token;
         }
@@ -106,6 +102,61 @@ public:
     }
 
     void execute() override {
-        // pass
+        fs::path file_location = get_location(filename);
+
+        // get rid of quotes
+        text = text.substr(1, text.size() - 2);
+
+        ifstream file(file_location);
+
+        string line;
+        int linenumber = 0;
+        int count = 0;
+        stringstream output;
+
+        // regex for -w option
+        regex _w_pattern("\\b" + text + "\\b", _i ? regex_constants::icase : regex_constants::ECMAScript);
+
+        while (getline(file, line)) {
+            linenumber++;
+            bool matched = false;
+
+            if (_i) {
+                string line_lower = line;
+                string text_lower = text;
+                transform(line_lower.begin(), line_lower.end(), line_lower.begin(), ::tolower);
+                transform(text_lower.begin(), text_lower.end(), text_lower.begin(), ::tolower);
+
+                if (line_lower.find(text_lower) != string::npos)
+                    matched = true;
+            }
+            else if (line.find(text) != string::npos) matched = true;
+
+            if (_w) {
+                if (regex_search(line, _w_pattern)) matched = true;
+                else matched = false;
+            }
+
+            if (matched) {
+                count++;
+                if (!_c) {
+                    if (_n) output << linenumber << ":";
+                    output << line << endl;
+                }
+            }
+        }
+
+
+        if (_c) output << count << endl;
+
+        cout << output.str();
+
+        if (!redirection.empty()) {
+            fs::path rdrfile_location = get_location(rdrfile);
+
+            if (redirection == ">") ofstream(rdrfile_location) << output.str();
+            else ofstream(rdrfile_location, ios::app) << output.str();
+        }
     }
+
 };

@@ -1,0 +1,7 @@
+Error occurred in module A
+warning: low memory
+error occurred in module B
+ERROR occurred in module C
+Minor error detected
+error
+errors found

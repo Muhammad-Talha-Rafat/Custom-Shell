@@ -79,16 +79,18 @@ namespace SHELL
     const unordered_map<string, string> file_path = {
         { "bash",       "Playground/bash.txt" },
         { "essay",      "Playground/essay.txt" },
-        { "learning",   "Playground/learning.txt" },
+        { "AI",         "Playground/summary.log" },
         { "config",     "Playground/Assets/config.ini" },
         { "data",       "Playground/Assets/data.csv" },
+        { "template",   "Playground/Assets/template.md" },
         { "AI",         "Playground/Documents/AI.txt" },
-        { "template",   "Playground/Documents/template.md" }
+        { "learning",   "Playground/Documents/learning.txt" }
     };
 
     const unordered_map<string, string> file_content = {
         { "bash",       "Bash scripting simplifies repetitive tasks.\nInput parsing is important for custom shells.\nErrors should be handled gracefully in programs.\nA sandbox prevents accidental file deletion.\nFiles can contain logs, notes, or configuration.\nSimple tools often teach important concepts.\nExplore different Linux commands safely.\nAutomation saves time and reduces mistakes.\n" },
         { "essay",      "The quick brown fox jumps over the lazy dog.\nUnderstanding pointers is crucial in C++.\nMemory management prevents leaks and crashes.\nText files can store structured or unstructured data.\nDirectories help organize files logically.\nFunctions modularize your code for reusability.\nDebugging is a critical skill for developers.\nReading documentation saves a lot of time.\nCommand-line tools are powerful and fast.\nAlways test your programs thoroughly.\nLearning never stops in computer science.\n" },
+        { "summary",    "Error occurred in module A\nwarning: low memory\nerror occurred in module B\nERROR occurred in module C\nMinor error detected\nerror\nerrors found\n" },
         { "learning",   "Learning C++ is fun and rewarding.\nYou can build small tools like a custom shell.\nFile operations are essential for many programs.\nRedirection allows saving output to files.\nLogical operators control program flow.\nPractice makes perfect in programming.\nVS Code is a versatile editor for C++.\nKeep experimenting with new commands.\nEnjoy building projects step by step.\n" },
         { "config",     "[General]\nAppName=CustomShell\nVersion=1.0\nUser=playground\nHomeDir=E:/Kachra/OS Labs/Custom Shell/Playground\n\n[Settings]\nTheme=Dark\nShowTimestamps=True\n" },
         { "data",       "ID,Name,Role,Department\n1,Talha,Developer,IT\n2,Sara,Tester,QA\n3,Ali,Manager,Operations\n4,Hina,Designer,UI/UX\n5,Omar,Support,Helpdesk\n6,Lara,Analyst,Finance\n7,Usman,Intern,IT\n8,Amna,HR,Human Resources\n9,Zain,DevOps,IT\n10,Mariam,QA Lead,QA\n" },
