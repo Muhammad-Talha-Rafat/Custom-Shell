@@ -141,7 +141,6 @@
 | -------- | ------------------------------------------ |
 | `&&`     | Run command only if the first one succeeds |
 | `\|\|`   | Run command only if the first one fails    |
-| `!`      | Invert the exit status of a command        |
 
 **Example:**
 
