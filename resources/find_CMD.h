@@ -120,16 +120,16 @@ public:
 
             auto object = objects.begin();
             while (object != objects.end()) {
-                string fname = object->filename().string();
+                string filename = object->filename().string();
                 bool keep = false;
 
                 // work with globs: "*.extension"
                 if (name._pattern.size() >= 2 && name._pattern[0] == '*') {
                     string extension = name._pattern.substr(1);
-                    if (fname.size() >= extension.size() && fname.compare(fname.size() - extension.size(), extension.size(), extension) == 0)
+                    if (filename.size() >= extension.size() && filename.compare(filename.size() - extension.size(), extension.size(), extension) == 0)
                         keep = true;
                 } 
-                else if (fname == name._pattern)
+                else if (filename == name._pattern)
                     keep = true; // full filename pattern
 
                 if (keep) object++;
