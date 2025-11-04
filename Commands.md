@@ -80,6 +80,7 @@
 | `date`    | `date`                               | Show current date                           |
 | `time`    | `time`                               | Show current time                           |
 | `clear`   | `clear`                              | Clear terminal screen                       |
+| `reset`   | `reset`                              | Reset file structure                        |
 | `history` | `history`                            | Show previously run commands                |
 | `exit`    | `exit`                               | Terminates the session and ends the program |
 | `help`    | `help`                               | Show this manual but on terminal            |
@@ -92,8 +93,6 @@
 * `-n` → Show line numbers of hits, followed by line itself
 * `-w` → Match the whole word only
 * `-c` → Count the number of matching lines
-* `-l` → List filenames containing matches
-* `-o` → Show only the matching part of the line
 
 ### **Common `find` Options**
 

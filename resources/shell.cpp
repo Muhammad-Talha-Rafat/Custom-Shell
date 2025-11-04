@@ -79,7 +79,7 @@ namespace SHELL
     const unordered_map<string, string> file_path = {
         { "bash",       "Playground/bash.txt" },
         { "essay",      "Playground/essay.txt" },
-        { "AI",         "Playground/summary.log" },
+        { "summary",    "Playground/summary.log" },
         { "config",     "Playground/Assets/config.ini" },
         { "data",       "Playground/Assets/data.csv" },
         { "template",   "Playground/Assets/template.md" },

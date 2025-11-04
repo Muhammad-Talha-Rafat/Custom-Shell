@@ -1,3 +1,0 @@
-error occurred in module B
-Minor error detected
-error
