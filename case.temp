@@ -208,20 +208,6 @@ find . -name "*.txt" -size +10C
 find . -type f -size +10C
 find . -type d -size -1M
 find . -name "*.txt" -type f -size +10C
-find . < input.txt
-find . -name "*.txt" < input.txt
-find . -type f < input.txt
-find . -size +10K < input.txt
-find . -name "*.txt" -type f < input.txt
-find . -name "*.txt" -type f -size +10K  < input.txt
-find . < input.txt > result.txt
-find . -name "*.txt" < input.txt > result.txt
-find . -type f < input.txt > result.txt
-find . -size +10K < input.txt > result.txt
-find . -name "*.txt" -type f -size +10K < input.txt > result.txt
-find . < input.txt >> result.txt
-find . -name "*.txt" < input.txt >> result.txt
-find . -name "*.txt" -type f -size +10K < input.txt >> result.txt
 find . > result.txt
 find . -name "*.txt" > result.txt
 find . -type f > result.txt

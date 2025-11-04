@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
 
 #include "command.h"
 #include "shell.h"
@@ -13,7 +12,7 @@ class find_CMD : public COMMAND
 {
 private:
 
-    string directory;
+    fs::path directory;
     struct _name {
         bool _check = false;
         string _pattern = "";
@@ -28,16 +27,14 @@ private:
         int _integer = 0;
         char _unit = '\0';
     } size;
-    string filename;
     string redirection;
-    string rdrfile;
+    fs::path rdrfile;
 
 public:
 
     find_CMD(const string& token) {
         keyword = token;
-        directory = ".";
-        filename = "";
+        directory = "";
         redirection = "";
         rdrfile = "";
     }
@@ -50,8 +47,10 @@ public:
         if (!(ss >> token))
             throw invalid_argument(keyword + ": invalid format");
 
-        if (!regex_match(token, regex(path_dir)))
+        if (!validate_dir_path(token))
             throw invalid_argument(keyword + ": '" + token + "': invalid directory");
+
+        directory = token;
 
         if (!(ss >> token))
             return true;
@@ -66,7 +65,7 @@ public:
             if (token == "-name") {
                 check_flag(name._check, token);
                 ss >> name._pattern;
-                string pattern = "\"([a-zA-Z][a-zA-Z0-9_]*|\\*)\\.[a-zA-Z]+\""; // regex for name argument
+                string pattern = "\"([a-zA-Z][a-zA-Z0-9_]*|\\*)(\\.[a-zA-Z]+)?\""; // regex for name argument
                 if (!regex_match(name._pattern, regex(pattern)))
                     throw invalid_argument(keyword + ": '" + name._pattern + "': invalid '-name' argument");
             }
@@ -92,26 +91,12 @@ public:
                 return true;
         }
 
-        if (token == "<") {
-            if (!(ss >> filename))
-                throw invalid_argument(keyword + ": expected a filename");
-            else if (!regex_match(filename, regex(path_file)))
-                throw invalid_argument(keyword + ": '" + filename + "': invalid filename");
-            if (!(ss >> token))
-                return true;
-            if (token == ">" || token == ">>") {
-                if (!(ss >> rdrfile))
-                    throw invalid_argument(keyword + ": missing redirected filename");
-                else if (!regex_match(rdrfile, regex(path_file)))
-                    throw invalid_argument(keyword + ": '" + rdrfile + "': invalid redirected filename");
-            }
-            else throw invalid_argument(keyword + ": '" + token + "': invalid redirection operator");
-        }
-        else if (token == ">" || token == ">>") {
+        if (token == ">" || token == ">>") {
+            redirection = token;
             if (!(ss >> rdrfile))
                 throw invalid_argument(keyword + ": missing redirected filename");
-            else if (!regex_match(rdrfile, regex(path_file)))
-                throw invalid_argument(keyword + ": '" + rdrfile + "': invalid redirected filename");
+            else if (!validate_file_path(rdrfile))
+                throw invalid_argument(keyword + ": '" + rdrfile.string() + "': invalid redirected filename");
         }
         else throw invalid_argument(keyword + ": '" + token + "': invalid format");
 
@@ -122,6 +107,90 @@ public:
     }
 
     void execute() override {
-        // pass
+        
+        fs::path dir_location = get_location(directory);
+        vector<fs::path> objects;
+
+        for (auto object : fs::recursive_directory_iterator(dir_location))
+            objects.push_back(object);
+
+        if (name._check) {
+            // get rid of quotes
+            name._pattern = name._pattern.substr(1, name._pattern.size() - 2);
+
+            auto object = objects.begin();
+            while (object != objects.end()) {
+                string fname = object->filename().string();
+                bool keep = false;
+
+                // work with globs: "*.extension"
+                if (name._pattern.size() >= 2 && name._pattern[0] == '*') {
+                    string extension = name._pattern.substr(1);
+                    if (fname.size() >= extension.size() && fname.compare(fname.size() - extension.size(), extension.size(), extension) == 0)
+                        keep = true;
+                } 
+                else if (fname == name._pattern)
+                    keep = true; // full filename pattern
+
+                if (keep) object++;
+                else object = objects.erase(object);
+            }
+        }
+
+        if (type._check) {
+            auto object = objects.begin();
+            while (object != objects.end()) {
+                if (type._type == 'f' && !fs::is_regular_file(*object))
+                    object = objects.erase(object);
+                else if (type._type == 'd' && !fs::is_directory(*object))
+                    object = objects.erase(object);
+                else object++;
+            }
+        }
+
+        if (size._check) {
+            auto object = objects.begin();
+            while (object != objects.end()) {
+                if (!fs::is_regular_file(*object)) {
+                    object = objects.erase(object);
+                    continue;
+                }
+
+                auto file_size = fs::file_size(*object);
+
+                long long threshold = size._integer;
+                switch (size._unit) {
+                    case 'C': break;
+                    case 'K': threshold *= 1024; break;
+                    case 'M': threshold *= 1024 * 1024; break;
+                }
+
+                bool remove = false;
+                switch (size._sign) {
+                    case '+': if (!(file_size > threshold)) remove = true; break;
+                    case '-': if (!(file_size < threshold)) remove = true; break;
+                    case '\0': if (!(file_size == threshold)) remove = true; break;
+                    default: break;
+                }
+
+                if (remove) object = objects.erase(object);
+                else object++;    
+            }
+        }
+
+        stringstream output;
+        for (auto object : objects) {
+            fs::path relative_path = object.lexically_relative(noob.current_directory);
+            output << relative_path.string() << endl;
+        }
+
+        cout << output.str();
+
+        if (!redirection.empty()) {
+            fs::path rdrfile_location = get_location(rdrfile);
+
+            if (redirection == ">") ofstream(rdrfile_location) << output.str();
+            else ofstream(rdrfile_location, ios::app) << output.str();
+        }
     }
 };
