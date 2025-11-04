@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
 
 #include "command.h"
 #include "shell.h"
@@ -58,23 +57,10 @@ public:
         auto objects = _r ? directories : filenames;
 
         for (auto object : objects) {
-            fs::path object_parent;
-            try {
-                // try to get parent directory
-                object_parent = fs::canonical(noob.current_directory / object.parent_path());
-            }
-            catch(...) {
-                throw invalid_argument(keyword + ": '" + object.parent_path().string() + "': bad parent path");
-            }
-
-            // throw error if object location leads beyond Playground
-            if (object_parent.lexically_relative(noob.home_directory).string().rfind("..", 0) == 0)
-                throw invalid_argument(keyword + ": (out of bounds) access denied");
-
             // get removing object location
-            fs::path object_location = object_parent / object.filename();
+            fs::path object_location = get_location(object);
 
-            // check whether you're foolish enough to be removing the directory where you currently are
+            // check whether you're stupid enough to be removing the directory where you currently are
             if (object_location == noob.current_directory)
                 throw invalid_argument(keyword + ": cannot remove current directory");
 

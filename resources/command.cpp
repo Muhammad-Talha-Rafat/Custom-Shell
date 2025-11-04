@@ -41,3 +41,24 @@ unique_ptr<COMMAND> COMMAND::dispatch(const string& cmd) {
     else if (token == "history") return make_unique<history_MISC>();
     else                         throw invalid_argument(token + ": invalid command");
 }
+
+
+
+fs::path COMMAND::get_location(const fs::path& object) {
+
+    // try to get the parent directory
+    fs::path object_parent;
+    try {
+        // try to get parent directory
+        object_parent = fs::canonical(noob.current_directory / object.parent_path());
+    }
+    catch(...) {
+        throw invalid_argument(keyword + ": '" + object.parent_path().string() + "': bad parent path");
+    }
+
+    // throw error if processing location leads beyond Playground
+    if (object_parent.lexically_relative(noob.home_directory).string().rfind("..", 0) == 0)
+        throw invalid_argument(keyword + ": (out of bounds) access denied");
+
+    return object_parent / object.filename();
+}

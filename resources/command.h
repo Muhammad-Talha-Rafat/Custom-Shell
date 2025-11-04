@@ -25,6 +25,14 @@ class history_MISC;
 
 #include <memory>
 #include <filesystem>
+#include <chrono>
+#include <fstream>
+#include <ctime>
+#include <iomanip>
+#include <unordered_map>
+#include <regex>
+#include <vector>
+#include <deque>
 
 #include "user.h"
 
@@ -35,6 +43,8 @@ class COMMAND
 protected:
 
     string keyword;
+
+    fs::path get_location(const fs::path& object);
 
 public:
 

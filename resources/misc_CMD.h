@@ -1,11 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <ctime>
-#include <iomanip>
-#include <fstream>
-#include <filesystem>
-#include <unordered_map>
 
 #include "command.h"
 #include "shell.h"

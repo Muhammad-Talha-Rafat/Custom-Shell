@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
 
 #include "command.h"
 #include "shell.h"
@@ -13,11 +12,11 @@ class tail_CMD : public COMMAND
 {
 private:
 
-    string filename;
+    fs::path filename;
     char option;
     size_t size;
     string redirection;
-    string rdrfile;
+    fs::path rdrfile;
 
 public:
 
@@ -25,7 +24,7 @@ public:
         keyword = token;
         filename = "";
         option = '\0';
-        size = 0;
+        size = 5;
         redirection = "";
         rdrfile = "";
     }
@@ -52,14 +51,15 @@ public:
         if (token == "<")
             ss >> token; // ignore "<"
 
-        if (regex_match(token, regex(path_file))) {
+        if (validate_file_path(token)) {
+            filename = token;
             if (!(ss >> token)) return true;
             if (token != ">" && token != ">>")
                 throw invalid_argument(keyword + ": '" + token + "': expected a forward redirection");
             redirection = token;
             if(!(ss >> token))
                 throw invalid_argument(keyword + ": expected a filename");
-            else if (regex_match(token, regex(path_file)))
+            else if (validate_file_path(token))
                 rdrfile = token;
             else throw invalid_argument(keyword + ": '" + token + "': expected a filename");
         }
@@ -69,6 +69,42 @@ public:
     }
 
     void execute() override {
-        // pass
+        fs::path file_location = get_location(filename);
+
+        ifstream file(file_location);
+        stringstream output;
+
+        if (option == 'c') {
+            file.seekg(0, ios::end);
+            streamoff file_size = file.tellg();
+            streamoff start_pos = max<streamoff>(0, file_size - size - 1); // additional 1 for '\0'
+            file.seekg(start_pos, ios::beg);
+            string buffer;
+            buffer.resize(file_size - start_pos);
+            file.read(&buffer[0], buffer.size());
+            output << buffer;
+        }
+        else {
+            deque<string> lines;
+            string line;
+            while (getline(file, line)) {
+                if (lines.size() == size)
+                    lines.pop_front();
+                lines.push_back(line);
+            }
+            for (auto line : lines)
+                output << line << endl;
+        }
+
+        file.close();
+
+        cout << output.str();
+
+        if (!redirection.empty()) {
+            fs::path rdrfile_location = get_location(rdrfile);
+
+            if (redirection == ">") ofstream(rdrfile_location) << output.str();
+            else ofstream(rdrfile_location, ios::app) << output.str();
+        }
     }
 };

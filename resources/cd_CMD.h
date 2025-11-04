@@ -31,7 +31,7 @@ public:
                 directory = token;
             else throw invalid_argument(keyword + " '" + token + "': expected a directory");
             if (ss >> token)
-                throw invalid_argument(keyword + ": too many arguments");
+                throw invalid_argument(keyword + ": '" + token + "': too many arguments");
         }
         return true; // only "cd"
     }

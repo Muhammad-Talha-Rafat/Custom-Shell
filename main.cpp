@@ -58,7 +58,7 @@ int main() {
 
         string cmd;
         string shell_location = noob.current_directory.string().substr(31);
-        cout << shell_location << " $ ";
+        cout << "\033[0;32m" << shell_location << " $ " << "\033[0m";
         getline(cin, cmd);
 
         time_t now = time(nullptr);

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
 
 #include "command.h"
 #include "shell.h"
@@ -15,7 +14,7 @@ private:
 
     vector<string> messages;
     string redirection;
-    string rdrfile;
+    fs::path rdrfile;
 
 public:
 
@@ -35,7 +34,7 @@ public:
                 ss >> token; // ignore "<" 
 
             if (token == ">" || token == ">>") {
-                if (messages.empty()) throw invalid_argument(keyword + ": expected some text before '" + token + "'");
+                if (messages.empty()) throw invalid_argument(keyword + ": expected some text before redirecting");
                 else break;
             }
 
@@ -61,34 +60,35 @@ public:
         else {
             redirection = token;
             ss >> rdrfile;
-            if (!regex_match(rdrfile, regex(path_file)))
+            if (!validate_file_path(rdrfile))
                 throw invalid_argument(keyword + ": invalid filename after '" + redirection + "'");
         }
 
-        if (!ss.eof())
-            throw invalid_argument(keyword + ": too many arguments");
+        if (ss >> token) throw invalid_argument(keyword + ": '" + token + "': too many arguments");
 
         return true;
     }
 
     void execute() override {
 
-        // stringstream output;
+        stringstream output;
 
-        // for (auto message : messages) {
-        //     message = message.substr(1, message.size() - 2);
-        //     output << message << endl;
-        // }
-        // if (!redirection.empty()) {
+        for (auto message : messages)
+            output << message.substr(1, message.size() - 2) << endl;
 
-        //     fs::path file_location = noob.current_directory / rdrfile;
-        //     fs::path file_folder = file_location.parent_path();
+        cout << output.str();
 
-        //     if (file_folder.empty())
-        //         file_folder = noob.current_directory;
+        if (!redirection.empty()) {
 
-        //     ofstream file(rdrfile);
-        // }
-        // cout << output;
+            // are you trying to create something like *.txt?
+            if (rdrfile.filename().string()[0] == '*')
+                throw invalid_argument(keyword + ": '" + rdrfile.filename().string() + "': invalid filename");
+
+            // get validated file location
+            fs::path file_location = get_location(rdrfile);
+
+            if (redirection == ">") ofstream(file_location) << output.str();
+            else ofstream(file_location, ios::app) << output.str();
+        }
     }
 };
