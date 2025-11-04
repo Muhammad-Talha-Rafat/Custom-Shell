@@ -38,22 +38,79 @@ void reset() {
 }
 
 
+vector<string> split(const string& cmd, const string& logic_op) {
+    vector<string> result;
+    size_t start = 0, end = 0;
+
+    while ((end = cmd.find(logic_op, start)) != string::npos) {
+        string token = cmd.substr(start, end - start);
+        if (!token.empty())
+            result.push_back(token);
+        start = end + logic_op.length();
+    }
+
+    string last = cmd.substr(start);
+    if (!last.empty())
+        result.push_back(last);
+
+    return result;
+}
+
+
+void trim(string& cmd) {
+    int start = 0;
+    int end = cmd.size() - 1;
+
+    // Move from start and forward until first non-space
+    while (start <= end && std::isspace(static_cast<unsigned char>(cmd[start]))) {
+        ++start;
+    }
+
+    // Move from end and backward until last non-space
+    while (end >= start && std::isspace(static_cast<unsigned char>(cmd[end]))) {
+        --end;
+    }
+
+    cmd = cmd.substr(start, end - start + 1);
+}
+
+bool execute(const string& cmd, fs::path shell_location, tm* local) {
+
+    if (cmd == "exit") exit(0);
+    else if (cmd == "clear") system("clear");
+    else if (cmd == "pwd")  cout << "\033[2;32m" << shell_location << "\033[0m"  << endl;
+    else if (cmd == "time") cout << "\033[2;32m" << put_time(local, "%H:%M:%S") << "\033[0m" << endl;
+    else if (cmd == "date") cout << "\033[2;32m" << put_time(local, "%Y-%m-%d") << "\033[0m" << endl;
+    else if (cmd == "reset") reset();
+    else try {
+        auto command = COMMAND::dispatch(cmd);
+        command->validate(cmd);
+        command->execute();
+    }
+    catch (const exception& e) {
+        cerr << "\033[0;31m" << e.what() << "\033[0m" << endl;
+        return false;
+    }
+    return true;
+}
+
+
 int main() {
 
     // apply ANSI escape codes for colored output on cmd
     #ifdef _WIN32
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    DWORD dwMode = 0;
-    GetConsoleMode(hOut, &dwMode);
-    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-    SetConsoleMode(hOut, dwMode);
+        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+        DWORD dwMode = 0;
+        GetConsoleMode(hOut, &dwMode);
+        dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+        SetConsoleMode(hOut, dwMode);
     #endif
 
     reset();
 
     ofstream clear("history.log", ios::trunc);
 
-    while (1) {
+    while (true) {
         ofstream out("history.log", ios::app);
 
         string cmd;
@@ -65,59 +122,27 @@ int main() {
         tm* local = localtime(&now);
         out << put_time(local, "%Y-%m-%d %H:%M:%S") << '\t' << cmd << '\n';
 
-        if (cmd == "exit") break;
-        else if (cmd == "clear") system("clear");
-        else if (cmd == "pwd")  cout << "\033[2;32m" << shell_location << "\033[0m"  << endl;
-        else if (cmd == "time") cout << "\033[2;32m" << put_time(local, "%H:%M:%S") << "\033[0m" << endl;
-        else if (cmd == "date") cout << "\033[2;32m" << put_time(local, "%Y-%m-%d") << "\033[0m" << endl;
-        else if (cmd == "reset") reset();
-        else try {
-            auto command = COMMAND::dispatch(cmd);
-            command->validate(cmd);
-            command->execute();
-        }
-        catch (const exception& e) {
-            cerr << "\033[0;31m" << e.what() << "\033[0m" << endl;
+        vector<string> or_cmds = split(cmd, "||");
+        bool or_success = false;
+
+        for (auto& or_cmd : or_cmds) {
+
+            vector<string> and_cmds = split(or_cmd, "&&");
+            bool and_success = true;
+            
+            for (auto& and_cmd : and_cmds) {
+                trim(and_cmd);
+                bool success = execute(and_cmd, shell_location, local);
+                if (!success) {
+                    and_success = false;
+                    break; // end if one AND group fails, go to next
+                }
+            }
+            if (and_success) {
+                or_success = true;
+                break; // end if one OR group succeeds, return
+            }
         }
     }
-    
     return 0;
 }
-
-
-
-// #include <iostream>
-// #include <filesystem>
-// #include <regex>
-// using namespace std;
-
-
-// const string path_dir = R"((?:\.\./|\./|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/?)";
-// const string path_file = R"((?:(?:\.\./|\./|/)?(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?)(?:/(?:[A-Za-z_][A-Za-z0-9_]*|\.\.?))*/)?(([A-Za-z][A-Za-z0-9_]*|\*))\.[A-Za-z]+)";
-
-// static const regex dir_pattern(path_dir);
-// static const regex file_pattern(path_file);
-
-// const bool validate_dir_path(const filesystem::path& path) {
-//     return regex_match(path.string(), dir_pattern);
-// }
-
-// const bool validate_file_path(const filesystem::path& path) {
-//     return regex_match(path.string(), file_pattern);
-// }
-
-
-// int main() {
-//     filesystem::path file = "../*.txt";
-//     filesystem::path curr = "E:\\Kachra\\OS Labs\\Custom-Shell\\Playground\\Assets";
-
-//     if (validate_file_path(file)) {
-//         filesystem::path extension = file.filename().extension();
-//         curr = filesystem::canonical(curr / file.parent_path());
-//         for (auto item : filesystem::directory_iterator(curr)) {
-//             if (item.path().extension() == extension)
-//                 cout << item.path().filename() << endl;
-//         }
-//         ;
-//     }
-// }
