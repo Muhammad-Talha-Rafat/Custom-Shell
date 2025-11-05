@@ -6,7 +6,7 @@
 
 ---
 
-### 🪟 Overview
+### 🎯 Overview
 **CustomShell** simulates a Linux-like shell experience on Windows. It allows users to execute familiar terminal commands, use logical operators, and perform file operations — all within a sandboxed environment (`Playground`) using pure C++.
 
 ---
