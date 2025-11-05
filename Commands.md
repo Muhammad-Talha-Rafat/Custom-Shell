@@ -145,10 +145,21 @@
 **Example:**
 
 ```bash
-mkdir test && cd test || echo "Failed to create or enter folder"
+grep "World" hello.txt && echo "Match found" || echo "No match"
 ```
 
 **Note:**
 
 * `&&` has **higher precedence** than `||`.
-* Bash evaluates `A && B || C && D || E` as `((A && B) || (C && D)) || E`.
+* Grouped command `A || (B && C) || (D && E)` is interpreted as `A || (B && C) || (D && E)`
+ 1- Run `A`
+  * If `A` succeeds → stop, entire chain considered successful.
+  * If `A` fails → evaluate `(B && C)`.
+ 2- Evaluate `B && C`
+  * Run `B`. If `B` fails → skip `C` and treat `(B && C)` as failed.
+  * If `B` succeeds → run `C`.
+   * If `C` succeeds → stop, chain considered successful.
+   * If `C` fails → `(B && C)` fails → move to `(D && E)`.
+ 3- Evaluate `D && E`
+  * Same logic as above: `D` runs first, if it succeeds → run `E`.
+  * Chain ends with success if `E` succeeds, otherwise failure.
