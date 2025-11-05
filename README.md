@@ -1,7 +1,6 @@
 # ⚙️ CustomShell
-![C++](https://img.shields.io/badge/Language-C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
-![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
-![Compiler](https://img.shields.io/badge/Compiler-g++-F34B7D?style=for-the-badge&logo=gnu&logoColor=white)
+![cpp](https://img.shields.io/badge/Language-C++-darkpink?style=for-the-badge)
+![windows](https://img.shields.io/badge/Platform-Windows-blue?style=for-the-badge)
 
 > 🧠 A Linux-style terminal emulator built in C++ for Windows
 
