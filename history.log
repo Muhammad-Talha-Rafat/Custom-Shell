@@ -1,6 +1,0 @@
-2025-11-05 01:58:10	ls -l && date
-2025-11-05 01:58:18	ls -l || date
-2025-11-05 01:58:29	ls -la && date
-2025-11-05 01:58:33	ls -la || date
-2025-11-05 02:00:01	ls -la || date && time || history
-2025-11-05 02:00:12	ls -la || date && tie || history
