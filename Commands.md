@@ -141,15 +141,25 @@
 | -------- | ------------------------------------------ |
 | `&&`     | Run command only if the first one succeeds |
 | `\|\|`   | Run command only if the first one fails    |
-| `!`      | Invert the exit status of a command        |
 
 **Example:**
 
 ```bash
-mkdir test && cd test || echo "Failed to create or enter folder"
+grep "World" hello.txt && echo "Match found" || echo "No match"
 ```
 
 **Note:**
 
 * `&&` has **higher precedence** than `||`.
-* Bash evaluates `A && B || C && D || E` as `((A && B) || (C && D)) || E`.
+* Grouped command `A || (B && C) || (D && E)` is interpreted as `A || (B && C) || (D && E)`
+  * Run `A`
+    * If `A` succeeds → stop, entire chain considered successful.
+    * If `A` fails → evaluate `(B && C)`.
+  * Evaluate `B && C`
+    * Run `B`. If `B` fails → skip `C` and treat `(B && C)` as failed.
+    * If `B` succeeds → run `C`.
+      - If `C` succeeds → stop, chain considered successful.
+      - If `C` fails → `(B && C)` fails → move to `(D && E)`.
+  * Evaluate `D && E`
+    * Same logic as above: `D` runs first, if it succeeds → run `E`.
+    * Chain ends with success if `E` succeeds, otherwise failure.
