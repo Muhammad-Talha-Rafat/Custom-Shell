@@ -24,7 +24,7 @@ CustomShell/
 │   ├── shell.h / shell.cpp
 │   ├── user.h
 │   ├── command.h / command.cpp
-│   ├── [command]_CMD.h  ← one for each command (ls, cd, grep, etc.)
+│   └── [command]_CMD.h  ← one for each command (ls, cd, grep, etc.)
 │
 └── Playground/
     └── sample files & directories
